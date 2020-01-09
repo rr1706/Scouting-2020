@@ -4,6 +4,11 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+//Notes
+/*
+Check GENERAL_BOTTOM to see if it fills the screen
+*/
+
 public class InfiniteRecharge extends AppCompatActivity {
 
     int[] color1 = { 127, 127, 255 }; //Made this an array because I couldn't figure out how to make a color object
