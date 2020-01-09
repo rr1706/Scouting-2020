@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:maxWidth="601dp"
+    android:maxHeight="1025dp"
+    android:minWidth="0dp"
+    android:minHeight="0dp"
+    tools:context=".InfiniteRecharge">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/GENERAL_TOP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/name_input"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="none"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/team_input"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:ems="10"
+            android:hint="Team#"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/round_input"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="100dp"
+            android:ems="10"
+            android:hint="Round#"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/robot_cant_move_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="20dp"
+            android:text="Can't move?"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/line3"
+            android:layout_width="5dp"
+            android:layout_height="151dp"
+            android:layout_marginStart="105dp"
+            android:layout_marginLeft="105dp"
+            android:background="#333333"
+            android:maxWidth="5dp"
+            android:maxHeight="151dp"
+            android:minWidth="5dp"
+            android:minHeight="151dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </android.support.constraint.ConstraintLayout>
+
+        <CheckBox
+            android:id="@+id/lost_connection_checkmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lost connection?"
+            app:layout_constraintStart_toEndOf="@+id/line3"
+            app:layout_constraintTop_toBottomOf="@+id/robot_cant_move_check" />
+
+        <CheckBox
+            android:id="@+id/parts_lost_checkmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="Parts lost?"
+            app:layout_constraintStart_toStartOf="@+id/line3"
+            app:layout_constraintTop_toBottomOf="@+id/lost_connection_checkmark" />
+
+        <Button
+            android:id="@+id/blue_team_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="116dp"
+            android:background="#1f3fbf"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/red_team_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="116dp"
+            android:background="#df0000"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:text="Alliance - "
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/line3"
+            app:layout_constraintTop_toBottomOf="@+id/parts_lost_checkmark" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/AUTO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:background="#666666"
+        android:maxWidth="300dp"
+        android:maxHeight="350dp"
+        android:minWidth="300dp"
+        android:minHeight="350dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/auto_title"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="Auto"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:background="#333333"
+            android:maxWidth="300dp"
+            android:maxHeight="5dp"
+            android:minWidth="300dp"
+            android:minHeight="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/TELEOP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="300dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="150dp"
+        android:background="#999999"
+        android:maxWidth="302dp"
+        android:maxHeight="350dp"
+        android:minWidth="302dp"
+        android:minHeight="350dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/teleop_title"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="Tele-op"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:background="#333333"
+            android:maxWidth="302dp"
+            android:maxHeight="5dp"
+            android:minWidth="302dp"
+            android:minHeight="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/ENDGAME"
+        android:layout_width="600dp"
+        android:layout_height="320dp"
+        android:background="#808080"
+        android:maxWidth="600dp"
+        android:maxHeight="320dp"
+        android:minWidth="600dp"
+        android:minHeight="320dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AUTO">
+
+        <TextView
+            android:id="@+id/endgame_title"
+            android:layout_width="600dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="Endgame"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/line4"
+            android:layout_width="602dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="60dp"
+            android:background="#333333"
+            android:maxWidth="602dp"
+            android:maxHeight="5dp"
+            android:minWidth="602dp"
+            android:minHeight="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
