@@ -4,38 +4,37 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-//Notes
-/*
-Check GENERAL_BOTTOM to see if it fills the screen
-*/
 
 public class InfiniteRecharge extends AppCompatActivity {
 
-    int[] color1 = { 127, 127, 255 }; //Made this an array because I couldn't figure out how to make a color object
+    /*int[] color1 = { 127, 127, 255 }; //Made this an array because I couldn't figure out how to make a color object
     int[] color2 = { 159, 159, 255 };
-    int[] color3 = { 159, 159, 223 };
+    int[] color3 = { 159, 159, 223 };*/ //not needed
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infinite_recharge);
 
-        //public void update_colors() {
-        //    System.out.print("hi");
-        //}
+        final ConstraintLayout AUTO = findViewById(R.id.AUTO);
+        final ConstraintLayout TELEOP = findViewById(R.id.TELEOP);
+        final ConstraintLayout ENDGAME = findViewById(R.id.ENDGAME);
 
-        ConstraintLayout AUTO = findViewById(R.id.AUTO);
-        ConstraintLayout TELEOP = findViewById(R.id.TELEOP);
-        ConstraintLayout ENDGAME = findViewById(R.id.ENDGAME);
-
-        AUTO.setBackgroundColor(android.graphics.Color.argb(255, color1[0], color1[1], color1[2]));
-        TELEOP.setBackgroundColor(android.graphics.Color.argb(255, color2[0], color2[1], color2[2]));
-        ENDGAME.setBackgroundColor(android.graphics.Color.argb(255, color2[0], color2[1], color2[2]));
-
-        final android.widget.Button button = findViewById(R.id.blue_team_button);
-        button.setOnClickListener(new android.view.View.OnClickListener() {
+        final android.widget.Button blueButton = findViewById(R.id.blue_team_button);
+        blueButton.setOnClickListener(new android.view.View.OnClickListener() {
             public void onClick(android.view.View v) {
-                System.out.println("h");
+                AUTO.setBackgroundColor(android.graphics.Color.argb(255, 143, 143, 223));
+                TELEOP.setBackgroundColor(android.graphics.Color.argb(255, 159, 159, 255));
+                ENDGAME.setBackgroundColor(android.graphics.Color.argb(255, 127, 127, 247));
+            }
+        });
+
+        final android.widget.Button redButton = findViewById(R.id.red_team_button);
+        redButton.setOnClickListener(new android.view.View.OnClickListener() {
+            public void onClick(android.view.View v) {
+                AUTO.setBackgroundColor(android.graphics.Color.argb(255, 223, 143, 143));
+                TELEOP.setBackgroundColor(android.graphics.Color.argb(255, 255, 159, 159));
+                ENDGAME.setBackgroundColor(android.graphics.Color.argb(255, 247, 127, 127));
             }
         });
     }
