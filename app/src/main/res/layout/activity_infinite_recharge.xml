@@ -141,6 +141,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ratchet_rockers_logo" />
 
+        <Spinner
+            android:id="@+id/logo_spinner"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:alpha="0"
+            android:entries="@array/teams"
+            android:spinnerMode="dialog"
+            app:layout_constraintEnd_toEndOf="@+id/logo"
+            app:layout_constraintTop_toTopOf="@+id/logo" />
+
 
     </android.support.constraint.ConstraintLayout>
 

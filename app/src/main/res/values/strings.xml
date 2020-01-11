@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">RR1706 Scouting App 2020</string>
+    <string name="app_name">Infinite Recharge</string>
+    <string-array name="teams">
+        <item>Team 1706</item>
+        <item>Team 8069</item>
+        <item>Team 4329</item>
+    </string-array>
 </resources>
