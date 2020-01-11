@@ -3,7 +3,9 @@ package com.example.dagon.rr1706scoutingapp2020;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 
@@ -54,6 +56,9 @@ public class InfiniteRecharge extends AppCompatActivity {
 
         //EditTexts
         final android.widget.EditText team_input = findViewById(R.id.team_input);
+
+        //Spinners
+        final android.widget.Spinner logo_spinner = findViewById(R.id.logo_spinner);
 
 
         blue_team_button.setOnClickListener(new android.view.View.OnClickListener() {
@@ -146,6 +151,25 @@ public class InfiniteRecharge extends AppCompatActivity {
                     logo.startAnimation(rotateAnimation);
                 }
             }
+        });
+
+
+        logo_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (logo_spinner.getSelectedItem().toString().equals("Team 1706")) {
+                    logo.setImageResource(R.drawable.ratchet_rockers_logo);
+                }
+                else if (logo_spinner.getSelectedItem().toString().equals("Team 8069")) {
+                    logo.setImageResource(R.drawable.super_hornets_logo);
+                }
+                else if (logo_spinner.getSelectedItem().toString().equals("Team 4329")) {
+                    logo.setImageResource(R.drawable.lutheran_roboteers_logo);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 }
