@@ -3,6 +3,7 @@ package com.example.dagon.rr1706scoutingapp2020;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 
 public class InfiniteRecharge extends AppCompatActivity {
@@ -20,21 +21,29 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ConstraintLayout TELEOP = findViewById(R.id.TELEOP);
         final ConstraintLayout ENDGAME = findViewById(R.id.ENDGAME);
 
-        final android.widget.Button blueButton = findViewById(R.id.blue_team_button);
-        blueButton.setOnClickListener(new android.view.View.OnClickListener() {
+        final android.widget.Button blue_team_button = findViewById(R.id.blue_team_button);
+        final android.widget.Button red_team_button = findViewById(R.id.red_team_button);
+
+        final android.widget.ImageView auto_power_port = findViewById(R.id.auto_power_port);
+        final android.widget.ImageView teleop_power_port = findViewById(R.id.teleop_power_port);
+
+        blue_team_button.setOnClickListener(new android.view.View.OnClickListener() {
             public void onClick(android.view.View v) {
                 AUTO.setBackgroundColor(android.graphics.Color.argb(255, 143, 143, 223));
                 TELEOP.setBackgroundColor(android.graphics.Color.argb(255, 159, 159, 255));
                 ENDGAME.setBackgroundColor(android.graphics.Color.argb(255, 127, 127, 247));
+                auto_power_port.setImageResource(R.drawable.power_port_blue);
+                teleop_power_port.setImageResource(R.drawable.power_port_blue);
             }
         });
 
-        final android.widget.Button redButton = findViewById(R.id.red_team_button);
-        redButton.setOnClickListener(new android.view.View.OnClickListener() {
+        red_team_button.setOnClickListener(new android.view.View.OnClickListener() {
             public void onClick(android.view.View v) {
                 AUTO.setBackgroundColor(android.graphics.Color.argb(255, 223, 143, 143));
                 TELEOP.setBackgroundColor(android.graphics.Color.argb(255, 255, 159, 159));
                 ENDGAME.setBackgroundColor(android.graphics.Color.argb(255, 247, 127, 127));
+                auto_power_port.setImageResource(R.drawable.power_port_red);
+                teleop_power_port.setImageResource(R.drawable.power_port_red);
             }
         });
     }
