@@ -25,7 +25,7 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Name"
-            android:inputType="none"
+            android:inputType="text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -137,6 +137,7 @@
             android:id="@+id/logo"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            android:contentDescription="logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ratchet_rockers_logo" />
@@ -485,7 +486,7 @@
             app:layout_constraintTop_toBottomOf="@+id/line2" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/teleop_rotation_warning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -586,6 +587,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
+            android:contentDescription="endgame_switch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line4"
             app:srcCompat="@drawable/switch_gray" />
@@ -612,6 +614,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ENDGAME">
 
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="120dp"
+            android:layout_height="70dp"
+            android:text="Submit"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

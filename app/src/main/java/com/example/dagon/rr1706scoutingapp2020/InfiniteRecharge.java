@@ -1,13 +1,11 @@
 package com.example.dagon.rr1706scoutingapp2020;
 
 import android.graphics.Color;
-import android.hardware.SensorManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
@@ -16,28 +14,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class InfiniteRecharge extends AppCompatActivity {
-
-    /*int[] color1 = { 127, 127, 255 }; //Made this an array because I couldn't figure out how to make a color object
-    int[] color2 = { 159, 159, 255 };
-    int[] color3 = { 159, 159, 223 };*/ //not needed
-
     int autoUpperScore = 0;
     int autoLowerScore = 0;
     int teleopUpperScore = 0;
     int teleopLowerScore = 0;
+    int team = -1;
+    int round = -1;
+    char alliance = 'n'; //b - Blue, r - Red, n - None
+    String name = "";
+    String submitError = "";
 
-    SensorManager sensorManager;
-
-    boolean fun = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infinite_recharge);
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
 
         //Constraints
         final ConstraintLayout AUTO = findViewById(R.id.AUTO);
@@ -47,6 +43,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         //Buttons
         final Button blue_team_button = findViewById(R.id.blue_team_button);
         final Button red_team_button = findViewById(R.id.red_team_button);
+        final Button submit = findViewById(R.id.submit);
 
         //ImageViews
         final ImageView auto_power_port = findViewById(R.id.auto_power_port);
@@ -69,14 +66,17 @@ public class InfiniteRecharge extends AppCompatActivity {
         final TextView teleop_lower_text = findViewById(R.id.teleop_lower_text);
 
         //EditTexts
+        final EditText name_input = findViewById(R.id.name_input);
         final EditText team_input = findViewById(R.id.team_input);
+        final EditText round_input = findViewById(R.id.round_input);
 
         //Spinners
         final Spinner logo_spinner = findViewById(R.id.logo_spinner);
 
-
         blue_team_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                alliance = 'b';
+
                 AUTO.setBackgroundColor(Color.argb(255, 143, 143, 255));
                 TELEOP.setBackgroundColor(Color.argb(255, 159, 159, 255));
                 ENDGAME.setBackgroundColor(Color.argb(255, 127, 127, 247));
@@ -88,6 +88,8 @@ public class InfiniteRecharge extends AppCompatActivity {
 
         red_team_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                alliance = 'r';
+
                 AUTO.setBackgroundColor(Color.argb(255, 255, 143, 143));
                 TELEOP.setBackgroundColor(Color.argb(255, 255, 159, 159));
                 ENDGAME.setBackgroundColor(Color.argb(255, 247, 127, 127));
@@ -152,17 +154,39 @@ public class InfiniteRecharge extends AppCompatActivity {
         });
 
 
+        name_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    name = name_input.getText().toString();
+                }
+            }
+        });
+
         team_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View view, boolean hasFocus) {
-                if (!hasFocus && team_input.getText().toString().equals("1706")) {
-                    RotateAnimation rotateAnimation = new RotateAnimation(0, 720f,
-                            Animation.RELATIVE_TO_SELF, 0.5f,
-                            Animation.RELATIVE_TO_SELF, 0.5f);
+                if (!hasFocus) {
+                    if (team_input.getText().toString().equals("")) { team = -1; }
+                    else { team = Integer.parseInt(team_input.getText().toString()); }
 
-                    rotateAnimation.setInterpolator(new LinearInterpolator());
-                    rotateAnimation.setDuration(1000);
+                    if (team_input.getText().toString().equals("1706")) {
+                        RotateAnimation rotateAnimation = new RotateAnimation(0, 720f,
+                                Animation.RELATIVE_TO_SELF, 0.5f,
+                                Animation.RELATIVE_TO_SELF, 0.5f);
 
-                    logo.startAnimation(rotateAnimation);
+                        rotateAnimation.setInterpolator(new LinearInterpolator());
+                        rotateAnimation.setDuration(1000);
+
+                        logo.startAnimation(rotateAnimation);
+                    }
+                }
+            }
+        });
+
+        round_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    if (round_input.getText().toString().equals("")) { round = -1; }
+                    else { round = Integer.parseInt(round_input.getText().toString()); }
                 }
             }
         });
@@ -186,7 +210,36 @@ public class InfiniteRecharge extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        //Keep fun stuff at the bottom since it may be deleted in the future
 
+        submit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                submitError = "";
+
+                if (alliance == 'n') { submitError += " No Alliance;"; }
+                if (name.equals("")) { submitError += " No Name;"; }
+                if (team == -1) { submitError += " No Team#;"; }
+                if (round == -1) { submitError += " No Round#;"; }
+
+                if (!(submitError.equals(""))) { Toast.makeText(getApplicationContext(), "Submit Error:"+submitError, Toast.LENGTH_LONG).show(); }
+                else {
+                    Toast.makeText(getApplicationContext(), "Scouting Data Submitted!", Toast.LENGTH_SHORT);
+                    //Reset vars
+                    team = -1;
+                    round += 1;
+                    teleopLowerScore = 0;
+                    teleopUpperScore = 0;
+                    autoLowerScore = 0;
+                    autoUpperScore = 0;
+
+                    //Reset fields
+                    team_input.setText("");
+                    round_input.setText(round+1);
+                    teleop_lower_text.setText("0");
+                    teleop_upper_text.setText("0");
+                    auto_lower_text.setText("0");
+                    auto_upper_text.setText("0");
+                }
+            }
+        });
     }
 }
