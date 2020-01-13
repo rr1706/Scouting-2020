@@ -10,6 +10,8 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -34,7 +36,6 @@ public class InfiniteRecharge extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infinite_recharge);
 
-
         //Constraints
         final ConstraintLayout AUTO = findViewById(R.id.AUTO);
         final ConstraintLayout TELEOP = findViewById(R.id.TELEOP);
@@ -57,7 +58,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ImageView teleop_lower_plus = findViewById(R.id.teleop_lower_plus);
         final ImageView teleop_lower_minus = findViewById(R.id.teleop_lower_minus);
         final ImageView logo = findViewById(R.id.logo);
-        final ImageView endgame_switch = findViewById(R.id.endgame_switch);
+        final ImageView endgame_switch_graphic = findViewById((R.id.endgame_switch_graphic));
 
         //TextViews
         final TextView auto_upper_text = findViewById(R.id.auto_upper_text);
@@ -70,8 +71,17 @@ public class InfiniteRecharge extends AppCompatActivity {
         final EditText team_input = findViewById(R.id.team_input);
         final EditText round_input = findViewById(R.id.round_input);
 
+        //CheckBoxes
+        final CheckBox endgame_in_boundary = findViewById(R.id.endgame_in_boundary);
+        final CheckBox endgame_hanging = findViewById(R.id.endgame_hanging);
+        final CheckBox endgame_balanced = findViewById(R.id.endgame_balanced);
+
         //Spinners
         final Spinner logo_spinner = findViewById(R.id.logo_spinner);
+
+        //Set invisible elements
+        endgame_hanging.setAlpha(1); endgame_hanging.setVisibility(View.GONE);
+        endgame_balanced.setAlpha(1); endgame_balanced.setVisibility(View.GONE);
 
         blue_team_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -82,7 +92,6 @@ public class InfiniteRecharge extends AppCompatActivity {
                 ENDGAME.setBackgroundColor(Color.argb(255, 127, 127, 247));
                 auto_power_port.setImageResource(R.drawable.power_port_blue);
                 teleop_power_port.setImageResource(R.drawable.power_port_blue);
-                endgame_switch.setImageResource(R.drawable.switch_blue);
             }
         });
 
@@ -95,7 +104,6 @@ public class InfiniteRecharge extends AppCompatActivity {
                 ENDGAME.setBackgroundColor(Color.argb(255, 247, 127, 127));
                 auto_power_port.setImageResource(R.drawable.power_port_red);
                 teleop_power_port.setImageResource(R.drawable.power_port_red);
-                endgame_switch.setImageResource(R.drawable.switch_red);
             }
         });
 
@@ -192,6 +200,50 @@ public class InfiniteRecharge extends AppCompatActivity {
         });
 
 
+        endgame_in_boundary.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    endgame_hanging.setVisibility(View.VISIBLE);
+                    endgame_hanging.setVisibility(View.VISIBLE);
+                    endgame_switch_graphic.setImageResource(R.drawable.switch_1_blue);
+                }
+                else {
+                    endgame_hanging.setChecked(false);
+                    endgame_hanging.setVisibility(View.GONE);
+                    endgame_balanced.setChecked(false);
+                    endgame_balanced.setVisibility(View.GONE);
+                    endgame_switch_graphic.setImageResource(R.drawable.switch_0_blue);
+                }
+            }
+        });
+
+        endgame_hanging.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    endgame_balanced.setVisibility(View.VISIBLE);
+                    endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue);
+                }
+                else {
+                    endgame_balanced.setChecked(false);
+                    endgame_balanced.setVisibility(View.GONE);
+                    endgame_switch_graphic.setImageResource(R.drawable.switch_1_blue);
+                }
+            }
+        });
+
+        endgame_balanced.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked) {
+                    endgame_switch_graphic.setImageResource(R.drawable.switch_3_blue);
+                }
+                else {
+                    endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue);
+                }
+            }
+        });
+
+
         logo_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -231,7 +283,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                     autoLowerScore = 0;
                     autoUpperScore = 0;
 
-                    //Reset fields
+                    //Reset fields - If there's a way to clear all checkbox elements at once I'll add it once I find out how to.
                     team_input.setText("");
                     round_input.setText(round+1);
                     teleop_lower_text.setText("0");

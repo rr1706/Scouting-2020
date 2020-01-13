@@ -51,17 +51,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <CheckBox
-            android:id="@+id/robot_cant_move_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="110dp"
-            android:layout_marginLeft="110dp"
-            android:layout_marginTop="20dp"
-            android:text="Can't move?"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <android.support.constraint.ConstraintLayout
             android:id="@+id/line3"
             android:layout_width="5dp"
@@ -77,24 +66,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
         </android.support.constraint.ConstraintLayout>
-
-        <CheckBox
-            android:id="@+id/lost_connection_checkmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lost connection?"
-            app:layout_constraintStart_toEndOf="@+id/line3"
-            app:layout_constraintTop_toBottomOf="@+id/robot_cant_move_check" />
-
-        <CheckBox
-            android:id="@+id/parts_lost_checkmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:text="Parts lost?"
-            app:layout_constraintStart_toStartOf="@+id/line3"
-            app:layout_constraintTop_toBottomOf="@+id/lost_connection_checkmark" />
 
         <Button
             android:id="@+id/blue_team_button"
@@ -126,12 +97,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="118dp"
             android:text="Alliance - "
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/line3"
-            app:layout_constraintTop_toBottomOf="@+id/parts_lost_checkmark" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/logo"
@@ -537,68 +508,62 @@
         </android.support.constraint.ConstraintLayout>
 
         <CheckBox
-            android:id="@+id/endgame_boundary_check"
+            android:id="@+id/endgame_in_boundary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginLeft="200dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginStart="208dp"
+            android:layout_marginLeft="208dp"
+            android:layout_marginTop="16dp"
             android:text="In Boundary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line4" />
 
         <CheckBox
-            android:id="@+id/endgame_hanging_check"
+            android:id="@+id/endgame_hanging"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginLeft="200dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginStart="208dp"
+            android:layout_marginLeft="208dp"
+            android:alpha="0.5"
             android:text="Hanging"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line4" />
+            app:layout_constraintTop_toBottomOf="@+id/endgame_in_boundary" />
 
         <CheckBox
-            android:id="@+id/endgame_balanced_checkbox"
+            android:id="@+id/endgame_balanced"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginLeft="200dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="208dp"
+            android:layout_marginLeft="208dp"
+            android:alpha="0.5"
             android:text="Balanced"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line4" />
+            app:layout_constraintTop_toBottomOf="@+id/endgame_hanging" />
 
         <CheckBox
-            android:id="@+id/endgame_nopoints_checkbox"
+            android:id="@+id/endgame_no_points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginLeft="200dp"
-            android:layout_marginTop="112dp"
+            android:layout_marginStart="340dp"
+            android:layout_marginLeft="340dp"
+            android:layout_marginTop="16dp"
             android:text="No Points"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line4" />
 
         <ImageView
-            android:id="@+id/endgame_switch"
-            android:layout_width="128dp"
-            android:layout_height="64dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:id="@+id/endgame_switch_graphic"
+            android:layout_width="160dp"
+            android:layout_height="128dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
             android:layout_marginTop="24dp"
-            android:contentDescription="endgame_switch"
+            android:contentDescription="endgame_switch_graphic"
+            android:src="@drawable/switch_0_blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line4"
-            app:srcCompat="@drawable/switch_gray" />
-
-        <TextView
-            android:id="@+id/endgame_hanging_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="If Hanging"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line4" />
+            tools:src="@drawable/switch_0_blue" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -622,6 +587,16 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/notes"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:ems="10"
+            android:hint="Notes"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
