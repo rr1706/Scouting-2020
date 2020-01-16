@@ -25,6 +25,7 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="Name"
+            android:imeOptions="actionDone"
             android:inputType="text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,6 +37,7 @@
             android:layout_marginTop="50dp"
             android:ems="10"
             android:hint="Team#"
+            android:imeOptions="actionDone"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,6 +49,7 @@
             android:layout_marginTop="100dp"
             android:ems="10"
             android:hint="Round#"
+            android:imeOptions="actionDone"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -95,8 +98,8 @@
             android:id="@+id/alliance_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="118dp"
             android:text="Alliance - "
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -123,6 +126,59 @@
             app:layout_constraintEnd_toEndOf="@+id/logo"
             app:layout_constraintTop_toTopOf="@+id/logo" />
 
+        <CheckBox
+            android:id="@+id/lost_parts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Lost Parts"
+            app:layout_constraintStart_toEndOf="@+id/line3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/communication_issues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Communication Issues"
+            app:layout_constraintStart_toEndOf="@+id/line3"
+            app:layout_constraintTop_toBottomOf="@+id/lost_parts" />
+
+        <CheckBox
+            android:id="@+id/broke_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Broke Down"
+            app:layout_constraintStart_toEndOf="@+id/line3"
+            app:layout_constraintTop_toBottomOf="@+id/communication_issues" />
+
+        <CheckBox
+            android:id="@+id/fell_over"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:text="Fell Over"
+            app:layout_constraintStart_toEndOf="@+id/lost_parts"
+            app:layout_constraintTop_toTopOf="@+id/lost_parts" />
+
+        <Spinner
+            android:id="@+id/speed"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="208dp"
+            android:layout_marginLeft="208dp"
+            android:layout_marginTop="108dp"
+            android:background="@android:drawable/editbox_background"
+            android:entries="@array/speed"
+            app:layout_constraintStart_toEndOf="@+id/line3"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </android.support.constraint.ConstraintLayout>
 
@@ -146,6 +202,7 @@
             android:gravity="center"
             android:text="Auto"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textColor="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,13 +211,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="60dp"
-            android:background="#333333"
+            android:alpha="0.5"
+            android:background="#000000"
             android:maxWidth="300dp"
             android:maxHeight="5dp"
             android:minWidth="300dp"
             android:minHeight="5dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/auto_power_port"
@@ -285,7 +343,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="216dp"
-            android:text="Passed initiation line"
+            android:text="Passed Initiation Line"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line" />
 
@@ -313,6 +371,7 @@
             android:gravity="center"
             android:text="Tele-op"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textColor="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -321,7 +380,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="60dp"
-            android:background="#333333"
+            android:alpha="0.5"
+            android:background="#000000"
             android:maxWidth="302dp"
             android:maxHeight="5dp"
             android:minWidth="302dp"
@@ -441,7 +501,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="184dp"
-            android:text="Rotation control 1"
+            android:text="Rotation Control 1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line2" />
 
@@ -452,7 +512,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="216dp"
-            android:text="Rotation control 2"
+            android:text="Rotation Control 2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line2" />
 
@@ -473,12 +533,12 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/ENDGAME"
         android:layout_width="602dp"
-        android:layout_height="320dp"
+        android:layout_height="240dp"
         android:background="#7f7f7f"
         android:maxWidth="602dp"
-        android:maxHeight="320dp"
+        android:maxHeight="240dp"
         android:minWidth="602dp"
-        android:minHeight="320dp"
+        android:minHeight="240dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AUTO">
 
@@ -489,6 +549,7 @@
             android:gravity="center"
             android:text="Endgame"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textColor="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -497,7 +558,8 @@
             android:layout_width="602dp"
             android:layout_height="5dp"
             android:layout_marginTop="60dp"
-            android:background="#333333"
+            android:alpha="0.5"
+            android:background="#000000"
             android:maxWidth="602dp"
             android:maxHeight="5dp"
             android:minWidth="602dp"
@@ -565,17 +627,42 @@
             app:layout_constraintTop_toBottomOf="@+id/line4"
             tools:src="@drawable/switch_0_blue" />
 
+        <Spinner
+            android:id="@+id/endgame_results"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:drawable/editbox_background"
+            android:entries="@array/results"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toEndOf="@+id/endgame_no_points"
+            app:layout_constraintTop_toBottomOf="@+id/line4" />
+
+        <Spinner
+            android:id="@+id/endgame_generator"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:drawable/editbox_background"
+            android:entries="@array/generator"
+            android:gravity="center|center_horizontal|center_vertical"
+            app:layout_constraintEnd_toEndOf="@+id/endgame_results"
+            app:layout_constraintTop_toBottomOf="@+id/endgame_results" />
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/GENERAL_BOTTOM"
         android:layout_width="602dp"
-        android:layout_height="70dp"
+        android:layout_height="150dp"
         android:background="#00000000"
         android:maxWidth="602dp"
-        android:maxHeight="70dp"
+        android:maxHeight="150dp"
         android:minWidth="602dp"
-        android:minHeight="70dp"
+        android:minHeight="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ENDGAME">
 
@@ -583,11 +670,12 @@
             android:id="@+id/submit"
             android:layout_width="120dp"
             android:layout_height="70dp"
+            android:layout_marginBottom="-1dp"
             android:text="Submit"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <EditText
             android:id="@+id/notes"
@@ -595,9 +683,24 @@
             android:layout_height="70dp"
             android:ems="10"
             android:hint="Notes"
+            android:imeOptions="actionDone"
             android:inputType="text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/data_submitted"
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="220dp"
+        android:alpha="1"
+        android:contentDescription="data_submitted"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/check"
+        tools:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>
