@@ -468,7 +468,7 @@ public class InfiniteRecharge extends AppCompatActivity {
 
                     try {
                         newTeam = getTeams().substring(
-                                getTeams().indexOf(round + ":") + 2, //Start
+                                getTeams().indexOf(round + ":") + 1 + (""+round).length(), //Start
                                 getTeams().substring(getTeams().indexOf(round + ":")).indexOf(";") + getTeams().indexOf(round + ":") //End
                         );
                     } catch(Exception e) {
