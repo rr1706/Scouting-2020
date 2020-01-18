@@ -234,96 +234,67 @@
             app:srcCompat="@drawable/power_port_gray"
             tools:srcCompat="@drawable/power_port_gray" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/auto_upper_score"
-            android:layout_width="108dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
-            android:background="#00FFFFFF"
+        <ImageView
+            android:id="@+id/auto_upper_plus"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="36dp"
+            android:contentDescription="auto_upper_plus"
             app:layout_constraintStart_toEndOf="@+id/auto_power_port"
-            app:layout_constraintTop_toTopOf="@+id/auto_power_port">
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            app:srcCompat="@drawable/plus" />
 
-            <ImageView
-                android:id="@+id/auto_upper_plus"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="4dp"
-                android:background="#000000"
-                android:contentDescription="auto_upper_plus"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/plus" />
+        <ImageView
+            android:id="@+id/auto_upper_minus"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="36dp"
+            android:contentDescription="auto_upper_minus"
+            app:layout_constraintStart_toEndOf="@+id/auto_upper_text"
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            app:srcCompat="@drawable/minus" />
 
-            <ImageView
-                android:id="@+id/auto_upper_minus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="4dp"
-                android:contentDescription="auto_upper_minus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/minus" />
+        <TextView
+            android:id="@+id/auto_upper_text"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/auto_upper_plus"
+            app:layout_constraintTop_toTopOf="@+id/auto_upper_plus" />
 
-            <TextView
-                android:id="@+id/auto_upper_text"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginLeft="36dp"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="0"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/auto_lower_plus"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="104dp"
+            android:contentDescription="auto_upper_plus"
+            app:layout_constraintStart_toEndOf="@+id/auto_power_port"
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            app:srcCompat="@drawable/plus" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/auto_lower_score"
-            android:layout_width="96dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="#00FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/auto_power_port"
-            app:layout_constraintStart_toEndOf="@+id/auto_power_port">
+        <ImageView
+            android:id="@+id/auto_lower_minus"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="104dp"
+            android:contentDescription="auto_upper_minus"
+            app:layout_constraintStart_toEndOf="@+id/auto_lower_text"
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            app:srcCompat="@drawable/minus" />
 
-            <ImageView
-                android:id="@+id/auto_lower_plus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="4dp"
-                android:contentDescription="auto_upper_plus"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/plus" />
-
-            <ImageView
-                android:id="@+id/auto_lower_minus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="4dp"
-                android:contentDescription="auto_upper_minus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/minus" />
-
-            <TextView
-                android:id="@+id/auto_lower_text"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginLeft="36dp"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="0"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/auto_lower_text"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/auto_lower_plus"
+            app:layout_constraintTop_toTopOf="@+id/auto_lower_plus" />
 
         <CheckBox
             android:id="@+id/auto_no_auto"
@@ -405,95 +376,67 @@
             app:layout_constraintTop_toBottomOf="@+id/line2"
             app:srcCompat="@drawable/power_port_gray" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/teleop_upper_score"
-            android:layout_width="96dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:background="#00FFFFFF"
+        <ImageView
+            android:id="@+id/teleop_upper_plus"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="36dp"
+            android:contentDescription="teleop_upper_plus"
             app:layout_constraintStart_toEndOf="@+id/teleop_power_port"
-            app:layout_constraintTop_toTopOf="@+id/teleop_power_port">
+            app:layout_constraintTop_toBottomOf="@+id/line2"
+            app:srcCompat="@drawable/plus" />
 
-            <ImageView
-                android:id="@+id/teleop_upper_plus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="4dp"
-                android:contentDescription="auto_upper_plus"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/plus" />
+        <ImageView
+            android:id="@+id/teleop_upper_minus"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="36dp"
+            android:contentDescription="auto_upper_minus"
+            app:layout_constraintStart_toEndOf="@+id/teleop_upper_text"
+            app:layout_constraintTop_toBottomOf="@+id/line2"
+            app:srcCompat="@drawable/minus" />
 
-            <ImageView
-                android:id="@+id/teleop_upper_minus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="4dp"
-                android:contentDescription="auto_upper_minus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/minus" />
+        <TextView
+            android:id="@+id/teleop_upper_text"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/teleop_upper_plus"
+            app:layout_constraintTop_toTopOf="@+id/teleop_upper_plus" />
 
-            <TextView
-                android:id="@+id/teleop_upper_text"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginLeft="36dp"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="0"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/teleop_lower_plus"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="104dp"
+            android:contentDescription="auto_upper_plus"
+            app:layout_constraintStart_toEndOf="@+id/teleop_power_port"
+            app:layout_constraintTop_toBottomOf="@+id/line2"
+            app:srcCompat="@drawable/plus" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/teleop_lower_score"
-            android:layout_width="96dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="#00FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/teleop_power_port"
-            app:layout_constraintStart_toEndOf="@+id/teleop_power_port">
+        <ImageView
+            android:id="@+id/teleop_lower_minus"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="104dp"
+            android:contentDescription="auto_upper_minus"
+            app:layout_constraintStart_toEndOf="@+id/teleop_lower_text"
+            app:layout_constraintTop_toBottomOf="@+id/line2"
+            app:srcCompat="@drawable/minus" />
 
-            <ImageView
-                android:id="@+id/teleop_lower_plus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="4dp"
-                android:contentDescription="auto_upper_plus"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/plus" />
-
-            <ImageView
-                android:id="@+id/teleop_lower_minus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="4dp"
-                android:contentDescription="auto_upper_minus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/minus" />
-
-            <TextView
-                android:id="@+id/teleop_lower_text"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginLeft="36dp"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="0"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/teleop_lower_text"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/teleop_lower_plus"
+            app:layout_constraintTop_toTopOf="@+id/teleop_lower_plus" />
 
         <CheckBox
             android:id="@+id/teleop_rot_ctrl_1"
@@ -604,17 +547,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/endgame_hanging" />
 
-        <CheckBox
-            android:id="@+id/endgame_no_points"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="340dp"
-            android:layout_marginLeft="340dp"
-            android:layout_marginTop="16dp"
-            android:text="No Points"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line4" />
-
         <ImageView
             android:id="@+id/endgame_switch_graphic"
             android:layout_width="160dp"
@@ -632,14 +564,14 @@
             android:id="@+id/endgame_results"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="44dp"
+            android:layout_marginRight="44dp"
             android:background="@android:drawable/editbox_background"
             android:entries="@array/results"
             android:gravity="center|center_horizontal|center_vertical"
             android:spinnerMode="dropdown"
-            app:layout_constraintStart_toEndOf="@+id/endgame_no_points"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line4" />
 
         <Spinner

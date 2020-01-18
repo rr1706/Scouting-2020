@@ -2,10 +2,11 @@ package com.example.dagon.rr1706scoutingapp2020;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.media.Image;
+import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,6 +22,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class InfiniteRecharge extends AppCompatActivity {
     int autoUpperScore = 0;
@@ -29,8 +41,12 @@ public class InfiniteRecharge extends AppCompatActivity {
     int teleopLowerScore = 0;
     int spin = 1;
     int ds_cooldown = 0; //ds_cooldown is the cool down for the data_submitted animation
+    int rot_ctrl = 0;
     char alliance = 'n'; //b - Blue, r - Red, n - None
     String submitError = "";
+    String robotErrors = "";
+    String genPos = "";
+    SimpleDateFormat time = new SimpleDateFormat("dd-HHmmss", Locale.getDefault());
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -319,10 +335,64 @@ public class InfiniteRecharge extends AppCompatActivity {
                 if (team == -1) { submitError += " No Team#;"; }
                 if (round == -1) { submitError += " No Round#;"; }
 
-                if (!(submitError.equals(""))) { Toast.makeText(getApplicationContext(), "Submit Error:"+submitError, Toast.LENGTH_LONG).show(); }
-                else {
+                if (!(submitError.equals(""))) {
+                    Toast.makeText(getApplicationContext(), "Submit Error:"+submitError, Toast.LENGTH_LONG).show();
+                } else {
                     Toast.makeText(getApplicationContext(), "Scouting Data Submitted!", Toast.LENGTH_SHORT);
                     ds_cooldown = 150; //Makes the check mark appear
+
+                    //Save data for transfer
+                    File dir = getDataDirectory();
+
+                    try {
+                        File myFile = new File(dir, team + "_" + round + "_" + time.format(new Date()) + ".txt");
+                        FileOutputStream fOut = new FileOutputStream(myFile, true);
+                        PrintWriter myOutWriter = new PrintWriter(new OutputStreamWriter(fOut));
+
+                        myOutWriter.println("Scouter: "+name_input.getText());
+                        myOutWriter.println("Team: "+team);
+                        myOutWriter.println("Timestamp: "+time.format(new Date()));
+                        myOutWriter.println("Match: "+round);
+                        myOutWriter.println("Alliance: "+alliance);
+                        myOutWriter.println("Speed: "+speed.getSelectedItem().toString());
+                        //Robot errors handling
+                        if (((CheckBox) findViewById(R.id.lost_parts)).isChecked()) { robotErrors += "lost parts, "; }
+                        if (((CheckBox) findViewById(R.id.fell_over)).isChecked()) { robotErrors += "fell over, "; }
+                        if (((CheckBox) findViewById(R.id.communication_issues)).isChecked()) { robotErrors += "comm issues, "; }
+                        if (((CheckBox) findViewById(R.id.broke_down)).isChecked()) { robotErrors += "broke down, "; }
+                        if (robotErrors.equals("")) { robotErrors = "None"; }
+                        myOutWriter.println("Robot Errors: "+robotErrors);
+                        myOutWriter.println("Auto Top Score: "+autoUpperScore);
+                        myOutWriter.println("Auto Bottom Score: "+autoLowerScore);
+                        myOutWriter.println("No Auto: "+((CheckBox) findViewById(R.id.auto_no_auto)).isChecked());
+                        myOutWriter.println("Passed Init Line: "+((CheckBox) findViewById(R.id.auto_pass_init_line)).isChecked());
+                        myOutWriter.println("Teleop Top Score: "+teleopUpperScore);
+                        myOutWriter.println("Teleop Bottom Score: "+teleopLowerScore);
+                        //Rotation control handling
+                        if (((CheckBox) findViewById(R.id.teleop_rot_ctrl_2)).isChecked()) { rot_ctrl = 2; }
+                        else if (((CheckBox) findViewById(R.id.teleop_rot_ctrl_1)).isChecked()) { rot_ctrl = 1; }
+                        else { rot_ctrl = 0; }
+                        myOutWriter.println("Rotation Control: "+rot_ctrl);
+                        //Generator position handling
+                        if (((CheckBox) findViewById(R.id.endgame_balanced)).isChecked()) { genPos = "Balanced"; }
+                        else if (((CheckBox) findViewById(R.id.endgame_hanging)).isChecked()) { genPos = "Hanging"; }
+                        else if (((CheckBox) findViewById(R.id.endgame_in_boundary)).isChecked()) { genPos = "In Boundary"; }
+                        else { genPos = "No Points"; }
+                        myOutWriter.println("Endgame: "+genPos);
+                        myOutWriter.println("Results: "+((Spinner) findViewById(R.id.endgame_results)).getSelectedItem());
+                        myOutWriter.println("Generator Level: "+((Spinner) findViewById(R.id.endgame_generator)).getSelectedItem());
+                        myOutWriter.println("Notes: "+((EditText) findViewById(R.id.notes)).getText());
+
+                        myOutWriter.flush();
+                        myOutWriter.close();
+                        fOut.close();
+
+                        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+
+                    } catch (IOException e) {
+                        Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                        Log.e("Exception", "File write failed: " + e.toString());
+                    }
 
                     //Reset vars
                     round++;
@@ -333,11 +403,12 @@ public class InfiniteRecharge extends AppCompatActivity {
 
                     //Reset fields
                     team_input.setText("");
-                    round_input.setText(""+(round+1));
+                    round_input.setText(""+round);
                     teleop_lower_text.setText("0");
                     teleop_upper_text.setText("0");
                     auto_lower_text.setText("0");
                     auto_upper_text.setText("0");
+                    ((EditText) findViewById(R.id.notes)).setText("");
                     ((Spinner) findViewById(R.id.speed)).setSelection(0);
                     ((Spinner) findViewById(R.id.endgame_results)).setSelection(0);
                     ((Spinner) findViewById(R.id.endgame_generator)).setSelection(0);
@@ -352,9 +423,14 @@ public class InfiniteRecharge extends AppCompatActivity {
                     ((CheckBox) findViewById(R.id.endgame_in_boundary)).setChecked(false);
                     ((CheckBox) findViewById(R.id.endgame_hanging)).setChecked(false);
                     ((CheckBox) findViewById(R.id.endgame_balanced)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.endgame_no_points)).setChecked(false);
                 }
             }
         });
+    }
+
+    private File getDataDirectory() {    File directory = Environment.getExternalStorageDirectory();
+        File myDir = new File(directory + "/ScoutingData");
+        myDir.mkdirs();
+        return myDir;
     }
 }
