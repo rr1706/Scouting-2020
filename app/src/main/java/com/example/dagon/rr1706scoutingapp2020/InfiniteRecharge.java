@@ -27,8 +27,6 @@ public class InfiniteRecharge extends AppCompatActivity {
     int autoLowerScore = 0;
     int teleopUpperScore = 0;
     int teleopLowerScore = 0;
-    int team = -1;
-    int round = -1;
     int spin = 1;
     int ds_cooldown = 0; //ds_cooldown is the cool down for the data_submitted animation
     char alliance = 'n'; //b - Blue, r - Red, n - None
@@ -217,9 +215,6 @@ public class InfiniteRecharge extends AppCompatActivity {
         team_input.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (team_input.getText().toString().equals("")) { team = -1; }
-                else { team = Integer.parseInt(team_input.getText().toString()); }
-
                 if (team_input.getText().toString().equals("1706") && spin == 1) {
                     RotateAnimation rotateAnimation = new RotateAnimation(0, 720f,
                             Animation.RELATIVE_TO_SELF, 0.5f,
@@ -233,16 +228,6 @@ public class InfiniteRecharge extends AppCompatActivity {
                 else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
 
                 return false; //Idk it wants a boolean
-            }
-        });
-
-        round_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (!hasFocus) {
-                    if (round_input.getText().toString().equals("")) { round = -1; }
-                    else { round = Integer.parseInt(round_input.getText().toString()); }
-                }
             }
         });
 
@@ -316,6 +301,15 @@ public class InfiniteRecharge extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 submitError = "";
+                int team = -1;
+                int round = -1;
+
+                //Special handling
+                if (team_input.getText().toString().equals("")) { team = -1; }
+                else { team = Integer.parseInt(team_input.getText().toString()); }
+
+                if (round_input.getText().toString().equals("")) { round = -1; }
+                else { round = Integer.parseInt(round_input.getText().toString()); }
 
                 if (alliance == 'n') { submitError += " No Alliance;"; }
                 if (name_input.getText().toString().equals("")) { submitError += " No Name;"; }
@@ -328,23 +322,37 @@ public class InfiniteRecharge extends AppCompatActivity {
                 if (!(submitError.equals(""))) { Toast.makeText(getApplicationContext(), "Submit Error:"+submitError, Toast.LENGTH_LONG).show(); }
                 else {
                     Toast.makeText(getApplicationContext(), "Scouting Data Submitted!", Toast.LENGTH_SHORT);
-                    ds_cooldown = 150;
+                    ds_cooldown = 150; //Makes the check mark appear
 
                     //Reset vars
-                    team = -1;
-                    round += 1;
+                    round++;
                     teleopLowerScore = 0;
                     teleopUpperScore = 0;
                     autoLowerScore = 0;
                     autoUpperScore = 0;
 
-                    //Reset fields - If there's a way to clear all checkbox elements at once I'll add it once I find out how to.
+                    //Reset fields
                     team_input.setText("");
                     round_input.setText(""+(round+1));
                     teleop_lower_text.setText("0");
                     teleop_upper_text.setText("0");
                     auto_lower_text.setText("0");
                     auto_upper_text.setText("0");
+                    ((Spinner) findViewById(R.id.speed)).setSelection(0);
+                    ((Spinner) findViewById(R.id.endgame_results)).setSelection(0);
+                    ((Spinner) findViewById(R.id.endgame_generator)).setSelection(0);
+                    ((CheckBox) findViewById(R.id.lost_parts)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.communication_issues)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.broke_down)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.fell_over)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.auto_no_auto)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.auto_pass_init_line)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.teleop_rot_ctrl_1)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.teleop_rot_ctrl_2)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.endgame_in_boundary)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.endgame_hanging)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.endgame_balanced)).setChecked(false);
+                    ((CheckBox) findViewById(R.id.endgame_no_points)).setChecked(false);
                 }
             }
         });
