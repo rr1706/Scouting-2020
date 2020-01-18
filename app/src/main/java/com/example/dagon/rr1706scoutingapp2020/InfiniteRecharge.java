@@ -22,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -43,10 +45,6 @@ public class InfiniteRecharge extends AppCompatActivity {
     int ds_cooldown = 0; //ds_cooldown is the cool down for the data_submitted animation
     int rot_ctrl = 0;
     char alliance = 'n'; //b - Blue, r - Red, n - None
-    String submitError = "";
-    String robotErrors = "";
-    String genPos = "";
-    SimpleDateFormat time = new SimpleDateFormat("dd-HHmmss", Locale.getDefault());
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -97,6 +95,10 @@ public class InfiniteRecharge extends AppCompatActivity {
         final CheckBox endgame_in_boundary = findViewById(R.id.endgame_in_boundary);
         final CheckBox endgame_hanging = findViewById(R.id.endgame_hanging);
         final CheckBox endgame_balanced = findViewById(R.id.endgame_balanced);
+        final CheckBox teleop_rot_ctrl_1 = findViewById(R.id.teleop_rot_ctrl_1);
+        final CheckBox teleop_rot_ctrl_2 = findViewById(R.id.teleop_rot_ctrl_2);
+        final CheckBox auto_no_auto = findViewById(R.id.auto_no_auto);
+        final CheckBox auto_pass_init_line = findViewById(R.id.auto_pass_init_line);
 
         //Spinners
         final Spinner logo_spinner = findViewById(R.id.logo_spinner);
@@ -107,6 +109,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         //Set invisible/visible elements
         endgame_hanging.setAlpha(1); endgame_hanging.setVisibility(View.GONE);
         endgame_balanced.setAlpha(1); endgame_balanced.setVisibility(View.GONE);
+        teleop_rot_ctrl_2.setAlpha(1); teleop_rot_ctrl_2.setVisibility(View.GONE);
         data_submitted.setVisibility(View.VISIBLE);
 
         //The great while loop (100/sec)
@@ -199,7 +202,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         teleop_upper_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                teleopUpperScore++;
+                if (teleopUpperScore < 99) { teleopUpperScore++; }
                 teleop_upper_text.setText(Integer.toString(teleopUpperScore));
             }
         });
@@ -214,7 +217,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         teleop_lower_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                teleopLowerScore++;
+                if (teleopLowerScore < 99) { teleopLowerScore++; }
                 teleop_lower_text.setText(Integer.toString(teleopLowerScore));
             }
         });
@@ -227,6 +230,69 @@ public class InfiniteRecharge extends AppCompatActivity {
         });
 
 
+        auto_no_auto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //Disable fields, reset fields & vars.
+                if (isChecked) {
+                    autoUpperScore = 0;
+                    autoLowerScore = 0;
+
+                    auto_upper_text.setText("0");
+                    auto_lower_text.setText("0");
+                    auto_pass_init_line.setChecked(false);
+
+                    auto_upper_text.setAlpha((float) 0.5);
+                    auto_lower_text.setAlpha((float) 0.5);
+                    auto_upper_plus.setAlpha((float) 0.5);
+                    auto_upper_minus.setAlpha((float) 0.5);
+                    auto_lower_plus.setAlpha((float) 0.5);
+                    auto_lower_minus.setAlpha((float) 0.5);
+                    auto_power_port.setAlpha((float) 0.5);
+                    auto_pass_init_line.setAlpha((float) 0.5);
+
+                    auto_upper_text.setEnabled(false);
+                    auto_lower_text.setEnabled(false);
+                    auto_upper_plus.setEnabled(false);
+                    auto_upper_minus.setEnabled(false);
+                    auto_lower_plus.setEnabled(false);
+                    auto_lower_minus.setEnabled(false);
+                    auto_power_port.setEnabled(false);
+                    auto_pass_init_line.setEnabled(false);
+                } else {
+                    auto_upper_text.setAlpha((float) 1);
+                    auto_lower_text.setAlpha((float) 1);
+                    auto_upper_plus.setAlpha((float) 1);
+                    auto_upper_minus.setAlpha((float) 1);
+                    auto_lower_plus.setAlpha((float) 1);
+                    auto_lower_minus.setAlpha((float) 1);
+                    auto_power_port.setAlpha((float) 1);
+                    auto_pass_init_line.setAlpha((float) 1);
+
+                    auto_upper_text.setEnabled(true);
+                    auto_lower_text.setEnabled(true);
+                    auto_upper_plus.setEnabled(true);
+                    auto_upper_minus.setEnabled(true);
+                    auto_lower_plus.setEnabled(true);
+                    auto_lower_minus.setEnabled(true);
+                    auto_power_port.setEnabled(true);
+                    auto_pass_init_line.setEnabled(true);
+                }
+
+            }
+        });
+
+        teleop_rot_ctrl_1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked) {
+                    teleop_rot_ctrl_2.setVisibility(View.VISIBLE);
+                } else {
+                    teleop_rot_ctrl_2.setVisibility(View.GONE);;
+                }
+            }
+        });
 
         team_input.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -240,8 +306,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                     rotateAnimation.setDuration(1000*spin);
 
                     logo.startAnimation(rotateAnimation);
-                }
-                else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
+                } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
 
                 return false; //Idk it wants a boolean
             }
@@ -255,8 +320,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                     endgame_hanging.setVisibility(View.VISIBLE);
                     endgame_hanging.setVisibility(View.VISIBLE);
                     endgame_switch_graphic.setImageResource(R.drawable.switch_1_blue);
-                }
-                else {
+                } else {
                     endgame_hanging.setChecked(false);
                     endgame_hanging.setVisibility(View.GONE);
                     endgame_balanced.setChecked(false);
@@ -272,8 +336,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                 if (isChecked) {
                     endgame_balanced.setVisibility(View.VISIBLE);
                     endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue);
-                }
-                else {
+                } else {
                     endgame_balanced.setChecked(false);
                     endgame_balanced.setVisibility(View.GONE);
                     endgame_switch_graphic.setImageResource(R.drawable.switch_1_blue);
@@ -287,8 +350,7 @@ public class InfiniteRecharge extends AppCompatActivity {
 
                 if (isChecked) {
                     endgame_switch_graphic.setImageResource(R.drawable.switch_3_blue);
-                }
-                else {
+                } else {
                     endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue);
                 }
             }
@@ -300,11 +362,9 @@ public class InfiniteRecharge extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (logo_spinner.getSelectedItem().toString().equals("Team 1706")) {
                     logo.setImageResource(R.drawable.ratchet_rockers_logo);
-                }
-                else if (logo_spinner.getSelectedItem().toString().equals("Team 8069")) {
+                } else if (logo_spinner.getSelectedItem().toString().equals("Team 8069")) {
                     logo.setImageResource(R.drawable.super_hornets_logo);
-                }
-                else if (logo_spinner.getSelectedItem().toString().equals("Team 4329")) {
+                } else if (logo_spinner.getSelectedItem().toString().equals("Team 4329")) {
                     logo.setImageResource(R.drawable.lutheran_roboteers_logo);
                 }
             }
@@ -316,9 +376,13 @@ public class InfiniteRecharge extends AppCompatActivity {
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                submitError = "";
-                int team = -1;
-                int round = -1;
+                String submitError = "";
+                String robotErrors = "";
+                String genPos;
+                SimpleDateFormat time = new SimpleDateFormat("dd-HHmmss", Locale.getDefault());
+                int team;
+                int round;
+                String newTeam;
 
                 //Special handling
                 if (team_input.getText().toString().equals("")) { team = -1; }
@@ -327,13 +391,14 @@ public class InfiniteRecharge extends AppCompatActivity {
                 if (round_input.getText().toString().equals("")) { round = -1; }
                 else { round = Integer.parseInt(round_input.getText().toString()); }
 
-                if (alliance == 'n') { submitError += " No Alliance;"; }
-                if (name_input.getText().toString().equals("")) { submitError += " No Name;"; }
-                if (speed.getSelectedItem().toString().equals("Speed")) { submitError += " No Speed;"; }
-                if (endgame_results.getSelectedItem().toString().equals("Results")) { submitError += " No Results;"; }
-                if (endgame_generator.getSelectedItem().toString().equals("Generator Level")) { submitError += " No Generator Lvl;"; }
-                if (team == -1) { submitError += " No Team#;"; }
-                if (round == -1) { submitError += " No Round#;"; }
+                if (alliance == 'n') { submitError += " No Alliance,"; }
+                if (name_input.getText().toString().equals("")) { submitError += " No Name,"; }
+                if (speed.getSelectedItem().toString().equals("Speed")) { submitError += " No Speed,"; }
+                if (endgame_results.getSelectedItem().toString().equals("Results")) { submitError += " No Results,"; }
+                if (endgame_generator.getSelectedItem().toString().equals("Generator Level")) { submitError += " No Generator Lvl,"; }
+                if (team == -1) { submitError += " No Team#,"; }
+                if (round == -1) { submitError += " No Round#,"; }
+                if (!submitError.equals("")) { submitError = submitError.substring(0,submitError.length()-1)+"."; }
 
                 if (!(submitError.equals(""))) {
                     Toast.makeText(getApplicationContext(), "Submit Error:"+submitError, Toast.LENGTH_LONG).show();
@@ -401,8 +466,17 @@ public class InfiniteRecharge extends AppCompatActivity {
                     autoLowerScore = 0;
                     autoUpperScore = 0;
 
+                    try {
+                        newTeam = getTeams().substring(
+                                getTeams().indexOf(round + ":") + 2, //Start
+                                getTeams().substring(getTeams().indexOf(round + ":")).indexOf(";") + getTeams().indexOf(round + ":") //End
+                        );
+                    } catch(Exception e) {
+                        newTeam = "";
+                    }
+
                     //Reset fields
-                    team_input.setText("");
+                    team_input.setText(newTeam);
                     round_input.setText(""+round);
                     teleop_lower_text.setText("0");
                     teleop_upper_text.setText("0");
@@ -428,9 +502,30 @@ public class InfiniteRecharge extends AppCompatActivity {
         });
     }
 
-    private File getDataDirectory() {    File directory = Environment.getExternalStorageDirectory();
+    private File getDataDirectory() {
+        File directory = Environment.getExternalStorageDirectory();
         File myDir = new File(directory + "/ScoutingData");
         myDir.mkdirs();
         return myDir;
+    }
+
+    private String getTeams() {
+        String text = "";
+        try {
+            File sdcard = Environment.getExternalStorageDirectory();
+            File file = new File(sdcard + "/Documents/ScoutingTeams.txt");
+
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                text += line + ";";
+            }
+            br.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.e("log", text);
+        return text;
     }
 }
