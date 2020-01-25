@@ -211,6 +211,11 @@ public class InfiniteRecharge extends AppCompatActivity {
                 teleop_power_port.setImageResource(R.drawable.power_port_blue);
                 GENERAL_TOP.setBackgroundColor(Color.argb(255, 223, 223, 255));
                 GENERAL_BOTTOM.setBackgroundColor(Color.argb(255, 223, 223, 255));
+
+                if (endgame_balanced.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_3_blue); }
+                else if (endgame_hanging.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue); }
+                else if (endgame_in_boundary.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_1_blue); }
+                else { endgame_switch_graphic.setImageResource(R.drawable.switch_0_blue); }
             }
         });
 
@@ -226,6 +231,11 @@ public class InfiniteRecharge extends AppCompatActivity {
                 teleop_power_port.setImageResource(R.drawable.power_port_red);
                 GENERAL_TOP.setBackgroundColor(Color.argb(255, 255, 223, 223));
                 GENERAL_BOTTOM.setBackgroundColor(Color.argb(255, 255, 223, 223));
+
+                if (endgame_balanced.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_3_red); }
+                else if (endgame_hanging.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_2_red); }
+                else if (endgame_in_boundary.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_1_red); }
+                else { endgame_switch_graphic.setImageResource(R.drawable.switch_0_red); }
             }
         });
 
@@ -375,13 +385,17 @@ public class InfiniteRecharge extends AppCompatActivity {
                 if (isChecked) {
                     endgame_hanging.setVisibility(View.VISIBLE);
                     endgame_hanging.setVisibility(View.VISIBLE);
-                    endgame_switch_graphic.setImageResource(R.drawable.switch_1_blue);
+                    if (alliance == 'b') { endgame_switch_graphic.setImageResource(R.drawable.switch_1_blue); }
+                    else if (alliance == 'r') { endgame_switch_graphic.setImageResource(R.drawable.switch_1_red); }
+                    else { endgame_switch_graphic.setImageResource(R.drawable.switch_1_gray); }
                 } else {
                     endgame_hanging.setChecked(false);
                     endgame_hanging.setVisibility(View.GONE);
                     endgame_balanced.setChecked(false);
                     endgame_balanced.setVisibility(View.GONE);
-                    endgame_switch_graphic.setImageResource(R.drawable.switch_0_blue);
+                    if (alliance == 'b') { endgame_switch_graphic.setImageResource(R.drawable.switch_0_blue); }
+                    else if (alliance == 'r') { endgame_switch_graphic.setImageResource(R.drawable.switch_0_red); }
+                    else { endgame_switch_graphic.setImageResource(R.drawable.switch_0_gray); }
                 }
             }
         });
@@ -391,11 +405,15 @@ public class InfiniteRecharge extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     endgame_balanced.setVisibility(View.VISIBLE);
-                    endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue);
+                    if (alliance == 'b') { endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue); }
+                    else if (alliance == 'r') { endgame_switch_graphic.setImageResource(R.drawable.switch_2_red); }
+                    else { endgame_switch_graphic.setImageResource(R.drawable.switch_2_gray); }
                 } else {
                     endgame_balanced.setChecked(false);
                     endgame_balanced.setVisibility(View.GONE);
-                    endgame_switch_graphic.setImageResource(R.drawable.switch_1_blue);
+                    if (alliance == 'b') { endgame_switch_graphic.setImageResource(R.drawable.switch_1_blue); }
+                    else if (alliance == 'r') { endgame_switch_graphic.setImageResource(R.drawable.switch_1_red); }
+                    else { endgame_switch_graphic.setImageResource(R.drawable.switch_1_gray); }
                 }
             }
         });
@@ -405,9 +423,13 @@ public class InfiniteRecharge extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
-                    endgame_switch_graphic.setImageResource(R.drawable.switch_3_blue);
+                    if (alliance == 'b') { endgame_switch_graphic.setImageResource(R.drawable.switch_3_blue); }
+                    else if (alliance == 'r') { endgame_switch_graphic.setImageResource(R.drawable.switch_3_red); }
+                    else { endgame_switch_graphic.setImageResource(R.drawable.switch_3_gray); }
                 } else {
-                    endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue);
+                    if (alliance == 'b') { endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue); }
+                    else if (alliance == 'r') { endgame_switch_graphic.setImageResource(R.drawable.switch_2_red); }
+                    else { endgame_switch_graphic.setImageResource(R.drawable.switch_2_gray); }
                 }
             }
         });
