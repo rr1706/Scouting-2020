@@ -1,9 +1,12 @@
 package com.example.dagon.rr1706scoutingapp2020;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,7 +47,10 @@ public class InfiniteRecharge extends AppCompatActivity {
     int spin = 1;
     int ds_cooldown = 0; //ds_cooldown is the cool down for the data_submitted animation
     int rot_ctrl = 0;
-    char alliance = 'n'; //b - Blue, r - Red, n - None
+    int team;
+    int round;
+    int chooseAlliance = 1000;
+    char alliance = 'n'; //b - Blue alliance, r - Red alliance, n - No alliance selected (grayscale)
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -59,11 +65,14 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ConstraintLayout TELEOP = findViewById(R.id.TELEOP);
         final ConstraintLayout ENDGAME = findViewById(R.id.ENDGAME);
         final ConstraintLayout GENERAL_BOTTOM = findViewById(R.id.GENERAL_BOTTOM);
+        final ConstraintLayout SCREEN = findViewById(R.id.SCREEN);
 
         //Buttons
         final Button blue_team_button = findViewById(R.id.blue_team_button);
         final Button red_team_button = findViewById(R.id.red_team_button);
+        final Button no_show = findViewById(R.id.no_show);
         final Button submit = findViewById(R.id.submit);
+        final Button update_team = findViewById(R.id.update_team);
 
         //ImageViews
         final ImageView auto_power_port = findViewById(R.id.auto_power_port);
@@ -85,6 +94,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         final TextView auto_lower_text = findViewById(R.id.auto_lower_text);
         final TextView teleop_upper_text = findViewById(R.id.teleop_upper_text);
         final TextView teleop_lower_text = findViewById(R.id.teleop_lower_text);
+        final TextView alliance_text = findViewById(R.id.alliance_text);
 
         //EditTexts
         final EditText name_input = findViewById(R.id.name_input);
@@ -106,6 +116,9 @@ public class InfiniteRecharge extends AppCompatActivity {
         final Spinner endgame_results = findViewById(R.id.endgame_results);
         final Spinner endgame_generator = findViewById(R.id.endgame_generator);
 
+        //Other elements
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         //Set invisible/visible elements
         endgame_hanging.setAlpha(1); endgame_hanging.setVisibility(View.GONE);
         endgame_balanced.setAlpha(1); endgame_balanced.setVisibility(View.GONE);
@@ -125,10 +138,28 @@ public class InfiniteRecharge extends AppCompatActivity {
                     data_submitted.post(new Runnable() {
                         @Override
                         public void run() {
+                            //data_submitted stuff
                             if (ds_cooldown > 0) { ds_cooldown--; }
 
                             if (ds_cooldown >= 100) { data_submitted.setAlpha(255); }
                             else { data_submitted.setAlpha(255*ds_cooldown/100); }
+
+                            //choose alliance reminder
+                            if (alliance != 'n') { alliance_text.setTypeface(null, Typeface.NORMAL); }
+                            else if (chooseAlliance > 0) { chooseAlliance--; }
+                            else if (chooseAlliance == 0) {
+                                chooseAlliance = -75;
+
+                                if (alliance_text.getTypeface() == null) {
+                                    alliance_text.setTypeface(null, Typeface.BOLD);
+                                } else {
+                                    alliance_text.setTypeface(null, Typeface.NORMAL);
+                                }
+                            }
+
+                            else if (chooseAlliance < 0) {
+                                chooseAlliance++;
+                            }
                         }
                     });
                 }
@@ -136,6 +167,37 @@ public class InfiniteRecharge extends AppCompatActivity {
         };
         Thread myThread = new Thread(myRunnable);
         myThread.start();
+
+
+        update_team.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newTeam;
+
+                if (round_input.getText().toString().equals("")) {
+                    team_input.setText("");
+                    return;
+                }
+
+                round = Integer.parseInt(round_input.getText().toString());
+
+                try {
+                    newTeam = getTeams().substring(
+                            getTeams().indexOf(round + ":") + 1 + (""+round).length(), //Start
+                            getTeams().substring(getTeams().indexOf(round + ":")).indexOf(";") + getTeams().indexOf(round + ":") //End
+                    );
+                } catch(Exception e) {
+                    newTeam = "";
+                    Log.e("log",e.toString());
+                }
+
+                team_input.setText(newTeam);
+
+                if (team_input.getText().toString().equals("1706") && spin == 1) {
+                    spinLogo();
+                } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
+            }
+        });
 
         blue_team_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +233,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         auto_upper_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                autoUpperScore++;
+                if (autoUpperScore < 99) { autoUpperScore++; }
                 auto_upper_text.setText(Integer.toString(autoUpperScore));
             }
         });
@@ -186,7 +248,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         auto_lower_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                autoLowerScore++;
+                if (autoLowerScore < 99) { autoLowerScore++; }
                 auto_lower_text.setText(Integer.toString(autoLowerScore));
             }
         });
@@ -289,7 +351,8 @@ public class InfiniteRecharge extends AppCompatActivity {
                 if (isChecked) {
                     teleop_rot_ctrl_2.setVisibility(View.VISIBLE);
                 } else {
-                    teleop_rot_ctrl_2.setVisibility(View.GONE);;
+                    teleop_rot_ctrl_2.setVisibility(View.GONE);
+                    teleop_rot_ctrl_2.setChecked(false);
                 }
             }
         });
@@ -298,17 +361,10 @@ public class InfiniteRecharge extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (team_input.getText().toString().equals("1706") && spin == 1) {
-                    RotateAnimation rotateAnimation = new RotateAnimation(0, 720f,
-                            Animation.RELATIVE_TO_SELF, 0.5f,
-                            Animation.RELATIVE_TO_SELF, 0.5f);
-
-                    rotateAnimation.setInterpolator(new LinearInterpolator());
-                    rotateAnimation.setDuration(1000*spin);
-
-                    logo.startAnimation(rotateAnimation);
+                    spinLogo();
                 } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
 
-                return false; //Idk it wants a boolean
+                return true;
             }
         });
 
@@ -374,7 +430,82 @@ public class InfiniteRecharge extends AppCompatActivity {
         });
 
 
+        final DialogInterface.OnClickListener NoShowDialog = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        data_submitted.setImageResource(R.drawable.ns_check);
+                        ds_cooldown = 150;
+
+                        SimpleDateFormat time = new SimpleDateFormat("dd-HHmmss", Locale.getDefault());
+                        File dir = getDataDirectory();
+
+                        try {
+                            File myFile = new File(dir, team + "_" + round + "_" + time.format(new Date()) + ".txt");
+                            FileOutputStream fOut = new FileOutputStream(myFile, true);
+                            PrintWriter myOutWriter = new PrintWriter(new OutputStreamWriter(fOut));
+
+                            myOutWriter.println("Scouter: " + name_input.getText());
+                            myOutWriter.println("Team: " + team);
+                            myOutWriter.println("Timestamp: " + time.format(new Date()));
+                            myOutWriter.println("Match: " + round);
+
+                            myOutWriter.flush();
+                            myOutWriter.close();
+                            fOut.close();
+
+                            Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                            Log.e("Exception", "File write failed: " + e.toString());
+                        }
+
+                        //Reset vars
+                        teleopLowerScore = 0;
+                        teleopUpperScore = 0;
+                        autoLowerScore = 0;
+                        autoUpperScore = 0;
+
+                        //Reset fields
+                        reset_fields();
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+        no_show.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String submitError = "";
+
+                //Special handling
+                if (team_input.getText().toString().equals("")) { team = -1; }
+                else { team = Integer.parseInt(team_input.getText().toString()); }
+
+                if (round_input.getText().toString().equals("")) { round = -1; }
+                else { round = Integer.parseInt(round_input.getText().toString()); }
+
+                if (alliance == 'n') { submitError += " No Alliance,"; }
+                if (name_input.getText().toString().equals("")) { submitError += " No Name,"; }
+                if (team == -1) { submitError += " No Team#,"; }
+                if (round == -1) { submitError += " No Round#,"; }
+                if (!submitError.equals("")) { submitError = submitError.substring(0,submitError.length()-1)+"."; }
+
+                if (!(submitError.equals(""))) {
+                    Toast.makeText(getApplicationContext(), "Submit Error:"+submitError, Toast.LENGTH_LONG).show();
+                } else {
+                    builder.setMessage("Are you sure the team is a no show?")
+                            .setPositiveButton("Yes", NoShowDialog)
+                            .setNegativeButton("No", NoShowDialog)
+                            .show();
+                }
+            }
+        });
+
         submit.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 String submitError = "";
                 String robotErrors = "";
@@ -382,7 +513,6 @@ public class InfiniteRecharge extends AppCompatActivity {
                 SimpleDateFormat time = new SimpleDateFormat("dd-HHmmss", Locale.getDefault());
                 int team;
                 int round;
-                String newTeam;
 
                 //Special handling
                 if (team_input.getText().toString().equals("")) { team = -1; }
@@ -403,7 +533,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                 if (!(submitError.equals(""))) {
                     Toast.makeText(getApplicationContext(), "Submit Error:"+submitError, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Scouting Data Submitted!", Toast.LENGTH_SHORT);
+                    data_submitted.setImageResource(R.drawable.check);
                     ds_cooldown = 150; //Makes the check mark appear
 
                     //Save data for transfer
@@ -460,43 +590,17 @@ public class InfiniteRecharge extends AppCompatActivity {
                     }
 
                     //Reset vars
-                    round++;
                     teleopLowerScore = 0;
                     teleopUpperScore = 0;
                     autoLowerScore = 0;
                     autoUpperScore = 0;
 
-                    try {
-                        newTeam = getTeams().substring(
-                                getTeams().indexOf(round + ":") + 1 + (""+round).length(), //Start
-                                getTeams().substring(getTeams().indexOf(round + ":")).indexOf(";") + getTeams().indexOf(round + ":") //End
-                        );
-                    } catch(Exception e) {
-                        newTeam = "";
-                    }
-
                     //Reset fields
-                    team_input.setText(newTeam);
-                    round_input.setText(""+round);
-                    teleop_lower_text.setText("0");
-                    teleop_upper_text.setText("0");
-                    auto_lower_text.setText("0");
-                    auto_upper_text.setText("0");
-                    ((EditText) findViewById(R.id.notes)).setText("");
-                    ((Spinner) findViewById(R.id.speed)).setSelection(0);
-                    ((Spinner) findViewById(R.id.endgame_results)).setSelection(0);
-                    ((Spinner) findViewById(R.id.endgame_generator)).setSelection(0);
-                    ((CheckBox) findViewById(R.id.lost_parts)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.communication_issues)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.broke_down)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.fell_over)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.auto_no_auto)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.auto_pass_init_line)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.teleop_rot_ctrl_1)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.teleop_rot_ctrl_2)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.endgame_in_boundary)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.endgame_hanging)).setChecked(false);
-                    ((CheckBox) findViewById(R.id.endgame_balanced)).setChecked(false);
+                    reset_fields();
+
+                    if (team_input.getText().toString().equals("1706") && spin == 1) {
+                        spinLogo();
+                    } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
                 }
             }
         });
@@ -527,5 +631,55 @@ public class InfiniteRecharge extends AppCompatActivity {
         }
         Log.e("log", text);
         return text;
+    }
+
+    private void reset_fields() {
+        int round = Integer.parseInt(((EditText) findViewById(R.id.round_input)).getText().toString());
+        String newTeam;
+
+        round++;
+
+        try {
+            newTeam = getTeams().substring(
+                    getTeams().indexOf(round + ":") + 1 + (""+round).length(), //Start
+                    getTeams().substring(getTeams().indexOf(round + ":")).indexOf(";") + getTeams().indexOf(round + ":") //End
+            );
+        } catch(Exception e) {
+            newTeam = "";
+            Log.e("log",e.toString());
+        }
+
+        ((EditText) findViewById(R.id.team_input)).setText(newTeam);
+        ((EditText) findViewById(R.id.round_input)).setText(""+round);
+        ((TextView) findViewById(R.id.teleop_lower_text)).setText("0");
+        ((TextView) findViewById(R.id.teleop_upper_text)).setText("0");
+        ((TextView) findViewById(R.id.auto_lower_text)).setText("0");
+        ((TextView) findViewById(R.id.auto_upper_text)).setText("0");
+        ((EditText) findViewById(R.id.notes)).setText("");
+        ((Spinner) findViewById(R.id.speed)).setSelection(0);
+        ((Spinner) findViewById(R.id.endgame_results)).setSelection(0);
+        ((Spinner) findViewById(R.id.endgame_generator)).setSelection(0);
+        ((CheckBox) findViewById(R.id.lost_parts)).setChecked(false);
+        ((CheckBox) findViewById(R.id.communication_issues)).setChecked(false);
+        ((CheckBox) findViewById(R.id.broke_down)).setChecked(false);
+        ((CheckBox) findViewById(R.id.fell_over)).setChecked(false);
+        ((CheckBox) findViewById(R.id.auto_no_auto)).setChecked(false);
+        ((CheckBox) findViewById(R.id.auto_pass_init_line)).setChecked(false);
+        ((CheckBox) findViewById(R.id.teleop_rot_ctrl_1)).setChecked(false);
+        ((CheckBox) findViewById(R.id.teleop_rot_ctrl_2)).setChecked(false);
+        ((CheckBox) findViewById(R.id.endgame_in_boundary)).setChecked(false);
+        ((CheckBox) findViewById(R.id.endgame_hanging)).setChecked(false);
+        ((CheckBox) findViewById(R.id.endgame_balanced)).setChecked(false);
+    }
+
+    private void spinLogo() {
+        RotateAnimation rotateAnimation = new RotateAnimation(0, 720f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+
+        rotateAnimation.setInterpolator(new LinearInterpolator());
+        rotateAnimation.setDuration(1000*spin);
+
+        ((ImageView) findViewById(R.id.logo)).startAnimation(rotateAnimation);
     }
 }
