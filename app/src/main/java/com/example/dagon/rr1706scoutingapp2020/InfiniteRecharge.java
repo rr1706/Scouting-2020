@@ -66,7 +66,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ConstraintLayout ENDGAME = findViewById(R.id.ENDGAME);
         final ConstraintLayout GENERAL_BOTTOM = findViewById(R.id.GENERAL_BOTTOM);
         final ConstraintLayout SCREEN = findViewById(R.id.SCREEN);
-
+/*Nice*/
         //Buttons
         final Button blue_team_button = findViewById(R.id.blue_team_button);
         final Button red_team_button = findViewById(R.id.red_team_button);
@@ -477,9 +477,9 @@ public class InfiniteRecharge extends AppCompatActivity {
                             myOutWriter.close();
                             fOut.close();
 
-                            Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Data Submitted!", Toast.LENGTH_SHORT).show();
                         } catch (IOException e) {
-                            Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Data Submission Failed! (Tell scouting)", Toast.LENGTH_SHORT).show();
                             Log.e("Exception", "File write failed: " + e.toString());
                         }
 
@@ -517,6 +517,9 @@ public class InfiniteRecharge extends AppCompatActivity {
 
                 if (!(submitError.equals(""))) {
                     Toast.makeText(getApplicationContext(), "Submit Error:"+submitError, Toast.LENGTH_LONG).show();
+
+                    data_submitted.setImageResource(R.drawable.x);
+                    ds_cooldown = 150;
                 } else {
                     builder.setMessage("Are you sure the team is a no show?")
                             .setPositiveButton("Yes", NoShowDialog)
@@ -554,6 +557,9 @@ public class InfiniteRecharge extends AppCompatActivity {
 
                 if (!(submitError.equals(""))) {
                     Toast.makeText(getApplicationContext(), "Submit Error:"+submitError, Toast.LENGTH_LONG).show();
+
+                    data_submitted.setImageResource(R.drawable.x);
+                    ds_cooldown = 150;
                 } else {
                     data_submitted.setImageResource(R.drawable.check);
                     ds_cooldown = 150; //Makes the check mark appear
