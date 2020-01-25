@@ -65,9 +65,8 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ConstraintLayout TELEOP = findViewById(R.id.TELEOP);
         final ConstraintLayout ENDGAME = findViewById(R.id.ENDGAME);
         final ConstraintLayout GENERAL_BOTTOM = findViewById(R.id.GENERAL_BOTTOM);
-        final ConstraintLayout SCREEN = findViewById(R.id.SCREEN);
-/*Nice*/
-        //Buttons
+
+/*Nice*///Buttons
         final Button blue_team_button = findViewById(R.id.blue_team_button);
         final Button red_team_button = findViewById(R.id.red_team_button);
         final Button no_show = findViewById(R.id.no_show);
@@ -364,17 +363,6 @@ public class InfiniteRecharge extends AppCompatActivity {
                     teleop_rot_ctrl_2.setVisibility(View.GONE);
                     teleop_rot_ctrl_2.setChecked(false);
                 }
-            }
-        });
-
-        team_input.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (team_input.getText().toString().equals("1706") && spin == 1) {
-                    spinLogo();
-                } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
-
-                return true;
             }
         });
 
