@@ -1,20 +1,34 @@
 import os
+import requests
 
-inpt = ""
 finish = 0
-rawTeams = ""
-teams = ""
 
+print("This is able to get all matches, but will currently only pull qualifiers as those")
+print("are what will be scouted and I am currently unable to find practice match logs")
 while finish == 0:
-    print("This is able to get all matches, but will currently only pull qualifiers as those")
-    print("are what will be scouted and I am currently unable to find practice match logs")
-    rawTeams = input("Paste in the full text from https://www.thebluealliance.com/api/v3/event/MATCHID/matches\n")
+    inpt = ""
+    rawTeams = ""
+    teams = ""
 
-    while True:
-        line = input("")
-        if line == "]":
-            break
-        teams += line
+    rawData = input("\nPaste in a URL or full text from https://www.thebluealliance.com/api/v3/event/MATCHID/matches\n")
+
+    if rawData[0] == "[":
+        while True:
+            line = input("")
+            if line == "]":
+                break
+            teams += line
+    else:
+        try:
+            teams = str(requests.get(rawData).text)
+            if "Invalid endpoint" in teams:
+                print("Unable to access the webpage (It's buggy)")
+                continue
+        except:
+            print("Error with formatting, please put a valid URL or raw text")
+            continue
+
+    print(teams)
 
     # Conversion:
     teams = teams \
