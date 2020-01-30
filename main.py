@@ -89,7 +89,7 @@ while finish == 0:
     for t in range(len(teams)):
         temp = ""
         for i in range(len(teams[t])-1):
-            scoutingTeams[i] = scoutingTeams[i] + teams[t][i] + teams[t][i+1] + "\n"
+            scoutingTeams[i] = scoutingTeams[i] + "." + teams[t][i] + teams[t][i+1] + "\n"
 
     # print(scoutingTeams)  # full scouting files
 
