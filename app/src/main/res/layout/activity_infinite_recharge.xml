@@ -470,7 +470,7 @@
             android:layout_marginStart="54dp"
             android:layout_marginLeft="54dp"
             android:layout_marginTop="184dp"
-            android:text="Rotation Control 1"
+            android:text="Rotation Control"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line2" />
 
@@ -481,7 +481,7 @@
             android:layout_marginStart="54dp"
             android:layout_marginLeft="54dp"
             android:alpha="0.5"
-            android:text="Rotation Control 2"
+            android:text="Position Control"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/teleop_rot_ctrl_1" />
 

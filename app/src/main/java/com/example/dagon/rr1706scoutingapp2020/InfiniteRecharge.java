@@ -182,8 +182,8 @@ public class InfiniteRecharge extends AppCompatActivity {
 
                 try {
                     newTeam = getTeams().substring(
-                            getTeams().indexOf(round + ":") + 1 + (""+round).length(), //Start
-                            getTeams().substring(getTeams().indexOf(round + ":")).indexOf(";") + getTeams().indexOf(round + ":") //End
+                            getTeams().indexOf("." + round + ":") + 1 + ("."+round).length(), //Start
+                            getTeams().substring(getTeams().indexOf("." + round + ":")).indexOf("\n") + getTeams().indexOf("." + round + ":") //End
                     );
                 } catch(Exception e) {
                     newTeam = "";
@@ -633,12 +633,13 @@ public class InfiniteRecharge extends AppCompatActivity {
         String text = "";
         try {
             File sdcard = Environment.getExternalStorageDirectory();
-            File file = new File(sdcard + "/Documents/ScoutingTeams.txt");
+            File file;
+            file = new File(sdcard + "/Documents/ScoutingTeams.txt");
 
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
             while ((line = br.readLine()) != null) {
-                text += line + ";";
+                text += line + "\n";
             }
             br.close();
         }
@@ -657,8 +658,8 @@ public class InfiniteRecharge extends AppCompatActivity {
 
         try {
             newTeam = getTeams().substring(
-                    getTeams().indexOf(round + ":") + 1 + (""+round).length(), //Start
-                    getTeams().substring(getTeams().indexOf(round + ":")).indexOf(";") + getTeams().indexOf(round + ":") //End
+                    getTeams().indexOf("." + round + ":") + 1 + ("."+round).length(), //Start
+                    getTeams().substring(getTeams().indexOf("." + round + ":")).indexOf("\n") + getTeams().indexOf("." + round + ":") //End
             );
         } catch(Exception e) {
             newTeam = "";
