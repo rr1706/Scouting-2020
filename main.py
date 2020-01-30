@@ -1,4 +1,5 @@
 import os
+import shutil
 import requests
 
 finish = 0
@@ -89,14 +90,50 @@ while finish == 0:
     for t in range(len(teams)):
         temp = ""
         for i in range(len(teams[t])-1):
-            scoutingTeams[i] = scoutingTeams[i] + "." + teams[t][i] + teams[t][i+1] + "\n"
+            scoutingTeams[i] = scoutingTeams[i] + ".69*]" + teams[t][i] + teams[t][i+1] + "\n"
 
     # print(scoutingTeams)  # full scouting files
 
-    for s in range(len(scoutingTeams)-1):
-        file = open("ScoutingTeams Documents/" + "ScoutingTeams"+str(s+1)+".txt", "w+")
-        file.write(str(scoutingTeams[s]))
-        file.close()
+    saveType = 0  # 1 - txt file. 2 - folder with txt inside
+    while saveType == 0:
+        print("\nShould it save as unique 'txt' files, or txts in unique 'folder's?")
+        temp = input("")
+        if "txt" in temp or temp == "t":
+            saveType = 1
+        elif "folder" in temp or temp == "f":
+            saveType = 2
+        else:
+            print("Please put 'txt' or 'folder'")
+
+    for i in range(6):
+        try:
+            os.remove("ScoutingTeams Documents/ScoutingTeams"+str(i+1)+"/ScoutingTeams.txt")  # Remove txts in folders
+        except:
+            pass
+
+    for i in range(6):
+        try:
+            shutil.rmtree("ScoutingTeams Documents/ScoutingTeams"+str(i+1)+"")  # Remove folders
+        except:
+            pass
+
+    for i in range(6):
+        try:
+            os.remove("ScoutingTeams Documents/" + "ScoutingTeams"+str(i+1)+".txt")  # Remove txt files in main dir
+        except:
+            pass
+
+    if saveType == 1:
+        for s in range(len(scoutingTeams)-1):
+            file = open("ScoutingTeams Documents/" + "ScoutingTeams"+str(s+1)+".txt", "w+")
+            file.write(str(scoutingTeams[s]))
+            file.close()
+    elif saveType == 2:
+        for s in range(len(scoutingTeams) - 1):
+            os.makedirs("ScoutingTeams Documents/ScoutingTeams"+str(s+1))
+            file = open("ScoutingTeams Documents/ScoutingTeams" + str(s+1) + "/ScoutingTeams.txt", "w+")
+            file.write(str(scoutingTeams[s]))
+            file.close()
 
     print("\n\nFiles created! Be sure to rename each file to 'ScoutingTeams.txt' when sending to the tablet")
     print("Blue alliance teams: 1-3, Red alliance teams: 4-6")
