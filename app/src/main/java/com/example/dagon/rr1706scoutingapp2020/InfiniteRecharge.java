@@ -5,12 +5,12 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -28,7 +28,6 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -87,6 +86,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ImageView logo = findViewById(R.id.logo);
         final ImageView endgame_switch_graphic = findViewById((R.id.endgame_switch_graphic));
         final ImageView data_submitted = findViewById(R.id.data_submitted);
+        final ImageView teleop_wheel = findViewById(R.id.teleop_wheel);
 
         //TextViews
         final TextView auto_upper_text = findViewById(R.id.auto_upper_text);
@@ -193,7 +193,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                 team_input.setText(newTeam);
 
                 if (team_input.getText().toString().equals("1706") && spin == 1) {
-                    spinLogo();
+                    spinElement(logo,720f,1000);
                 } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
             }
         });
@@ -210,6 +210,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                 teleop_power_port.setImageResource(R.drawable.power_port_blue);
                 GENERAL_TOP.setBackgroundColor(Color.argb(255, 223, 223, 255));
                 GENERAL_BOTTOM.setBackgroundColor(Color.argb(255, 223, 223, 255));
+                teleop_wheel.setImageResource(R.drawable.wheel);
 
                 if (endgame_balanced.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_3_blue); }
                 else if (endgame_hanging.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue); }
@@ -230,6 +231,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                 teleop_power_port.setImageResource(R.drawable.power_port_red);
                 GENERAL_TOP.setBackgroundColor(Color.argb(255, 255, 223, 223));
                 GENERAL_BOTTOM.setBackgroundColor(Color.argb(255, 255, 223, 223));
+                teleop_wheel.setImageResource(R.drawable.wheel);
 
                 if (endgame_balanced.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_3_red); }
                 else if (endgame_hanging.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_2_red); }
@@ -359,12 +361,25 @@ public class InfiniteRecharge extends AppCompatActivity {
 
                 if (isChecked) {
                     teleop_rot_ctrl_2.setVisibility(View.VISIBLE);
+                    spinElement(teleop_wheel,720,1250);
                 } else {
                     teleop_rot_ctrl_2.setVisibility(View.GONE);
                     teleop_rot_ctrl_2.setChecked(false);
                 }
             }
         });
+
+        teleop_rot_ctrl_2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    spinElement(teleop_wheel, 90, 300);
+                } else {
+                    spinElement(teleop_wheel, -90,300);
+                }
+            }
+        });
+
 
 
         endgame_in_boundary.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -376,6 +391,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                     if (alliance == 'b') { endgame_switch_graphic.setImageResource(R.drawable.switch_1_blue); }
                     else if (alliance == 'r') { endgame_switch_graphic.setImageResource(R.drawable.switch_1_red); }
                     else { endgame_switch_graphic.setImageResource(R.drawable.switch_1_gray); }
+
                 } else {
                     endgame_hanging.setChecked(false);
                     endgame_hanging.setVisibility(View.GONE);
@@ -615,7 +631,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                     reset_fields();
 
                     if (team_input.getText().toString().equals("1706") && spin == 1) {
-                        spinLogo();
+                        spinElement(logo,720f,1000);
                     } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
                 }
             }
@@ -689,14 +705,16 @@ public class InfiniteRecharge extends AppCompatActivity {
         ((CheckBox) findViewById(R.id.endgame_balanced)).setChecked(false);
     }
 
-    private void spinLogo() {
-        RotateAnimation rotateAnimation = new RotateAnimation(0, 720f,
+    private void spinElement(ImageView element, float deg, int time) {
+        element.setRotation(deg+element.getRotation());
+
+        RotateAnimation rotateAnimation = new RotateAnimation(-deg, 0,
                 Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);
 
         rotateAnimation.setInterpolator(new LinearInterpolator());
-        rotateAnimation.setDuration(1000*spin);
+        rotateAnimation.setDuration(time);
 
-        ((ImageView) findViewById(R.id.logo)).startAnimation(rotateAnimation);
+        (element).startAnimation(rotateAnimation);
     }
 }
