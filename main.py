@@ -1,7 +1,9 @@
 import os
+import subprocess
 import shutil
 import requests
 
+basePath = os.path.dirname(str(os.path.realpath(__file__)))
 finish = 0
 
 print("This is able to get all matches, but will currently only pull qualifiers as those")
@@ -90,26 +92,21 @@ while finish == 0:
     for t in range(len(teams)):
         temp = ""
         for i in range(len(teams[t])-1):
-            scoutingTeams[i] = scoutingTeams[i] + ".69*]" + teams[t][i] + teams[t][i+1] + "\n"
+            scoutingTeams[i] = scoutingTeams[i] + "." + teams[t][i] + teams[t][i+1] + "\n"
 
     # print(scoutingTeams)  # full scouting files
 
-    saveType = 0  # 1 - txt file. 2 - folder with txt inside
+    saveType = 0  # 1 - txt file. 2 - folder with txt inside.
+
     while saveType == 0:
-        print("\nShould it save as unique 'txt' files, or txts in unique 'folder's?")
+        print("\nShould it save as unique 'txt' files, or as txts in unique 'folder's?")
         temp = input("")
         if "txt" in temp or temp == "t":
             saveType = 1
         elif "folder" in temp or temp == "f":
             saveType = 2
         else:
-            print("Please put 'txt' or 'folder'")
-
-    for i in range(6):
-        try:
-            os.remove("ScoutingTeams Documents/ScoutingTeams"+str(i+1)+"/ScoutingTeams.txt")  # Remove txts in folders
-        except:
-            pass
+            print("Please put 'txt', 'folder'")
 
     for i in range(6):
         try:
@@ -135,8 +132,11 @@ while finish == 0:
             file.write(str(scoutingTeams[s]))
             file.close()
 
-    print("\n\nFiles created! Be sure to rename each file to 'ScoutingTeams.txt' when sending to the tablet")
+    if saveType == 1:
+        print("\n\nFiles created! Be sure to rename each file to 'ScoutingTeams.txt' when sending to the tablet")
+    elif saveType == 2:
+        print("\n\nFolders created!")
     print("Blue alliance teams: 1-3, Red alliance teams: 4-6")
-    print("The files are located at "+os.path.dirname(os.path.realpath(__file__)))
+    print("The files are located at "+basePath)
 
     finish = 1
