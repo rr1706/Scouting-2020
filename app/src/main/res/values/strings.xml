@@ -25,6 +25,7 @@
 
     <string-array name="speed">
         <item>Speed</item>
+        <item>No movement</item>
         <item>Slow</item>
         <item>Average</item>
         <item>Fast</item>
