@@ -5,13 +5,13 @@
     android:id="@+id/SCREEN"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:maxWidth="601dp"
-    android:maxHeight="1025dp"
-    android:minWidth="0dp"
-    android:minHeight="0dp"
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:maxWidth="601dp"
+    android:maxHeight="890dp"
+    android:minWidth="0dp"
+    android:minHeight="0dp"
     tools:context=".InfiniteRecharge">
 
     <android.support.constraint.ConstraintLayout
