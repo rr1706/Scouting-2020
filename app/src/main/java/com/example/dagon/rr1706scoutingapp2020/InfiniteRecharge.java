@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
@@ -67,8 +66,8 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ConstraintLayout GENERAL_BOTTOM = findViewById(R.id.GENERAL_BOTTOM);
         final ConstraintLayout alliance_highlight = findViewById(R.id.alliance_highlight);
 
-        //Buttons
-/*Nice*/final Button blue_team_button = findViewById(R.id.blue_team_button);
+/*Nice*///Buttons
+        final Button blue_team_button = findViewById(R.id.blue_team_button);
         final Button red_team_button = findViewById(R.id.red_team_button);
         final Button no_show = findViewById(R.id.no_show);
         final Button submit = findViewById(R.id.submit);

@@ -690,7 +690,6 @@
         android:layout_marginLeft="75dp"
         android:layout_marginTop="220dp"
         android:alpha="1"
-        android:contentDescription="data_submitted"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/check"
