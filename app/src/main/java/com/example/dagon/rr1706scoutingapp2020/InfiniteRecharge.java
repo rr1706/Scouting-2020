@@ -1,11 +1,11 @@
 package com.example.dagon.rr1706scoutingapp2020;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -64,9 +65,10 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ConstraintLayout TELEOP = findViewById(R.id.TELEOP);
         final ConstraintLayout ENDGAME = findViewById(R.id.ENDGAME);
         final ConstraintLayout GENERAL_BOTTOM = findViewById(R.id.GENERAL_BOTTOM);
+        final ConstraintLayout alliance_highlight = findViewById(R.id.alliance_highlight);
 
-/*Nice*///Buttons
-        final Button blue_team_button = findViewById(R.id.blue_team_button);
+        //Buttons
+/*Nice*/final Button blue_team_button = findViewById(R.id.blue_team_button);
         final Button red_team_button = findViewById(R.id.red_team_button);
         final Button no_show = findViewById(R.id.no_show);
         final Button submit = findViewById(R.id.submit);
@@ -99,6 +101,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         final EditText name_input = findViewById(R.id.name_input);
         final EditText team_input = findViewById(R.id.team_input);
         final EditText round_input = findViewById(R.id.round_input);
+        final EditText notes = findViewById(R.id.notes);
 
         //CheckBoxes
         final CheckBox endgame_in_boundary = findViewById(R.id.endgame_in_boundary);
@@ -149,10 +152,10 @@ public class InfiniteRecharge extends AppCompatActivity {
                             else if (chooseAlliance == 0) {
                                 chooseAlliance = -75;
 
-                                if (alliance_text.getTypeface() == null) {
-                                    alliance_text.setTypeface(null, Typeface.BOLD);
+                                if (alliance_highlight.getAlpha() == 1) {
+                                    alliance_highlight.setAlpha(0);
                                 } else {
-                                    alliance_text.setTypeface(null, Typeface.NORMAL);
+                                    alliance_highlight.setAlpha(1);
                                 }
                             }
 
@@ -193,7 +196,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                 team_input.setText(newTeam);
 
                 if (team_input.getText().toString().equals("1706") && spin == 1) {
-                    spinElement(logo,720f,1000);
+                    spinElement(logo,720f,1500);
                 } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
             }
         });
@@ -210,6 +213,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                 teleop_power_port.setImageResource(R.drawable.power_port_blue);
                 GENERAL_TOP.setBackgroundColor(Color.argb(255, 223, 223, 255));
                 GENERAL_BOTTOM.setBackgroundColor(Color.argb(255, 223, 223, 255));
+                alliance_text.setBackgroundColor(Color.argb(255, 223, 223, 255));
                 teleop_wheel.setImageResource(R.drawable.wheel);
 
                 if (endgame_balanced.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_3_blue); }
@@ -231,12 +235,37 @@ public class InfiniteRecharge extends AppCompatActivity {
                 teleop_power_port.setImageResource(R.drawable.power_port_red);
                 GENERAL_TOP.setBackgroundColor(Color.argb(255, 255, 223, 223));
                 GENERAL_BOTTOM.setBackgroundColor(Color.argb(255, 255, 223, 223));
+                alliance_text.setBackgroundColor(Color.argb(255, 255, 223, 223));
                 teleop_wheel.setImageResource(R.drawable.wheel);
 
                 if (endgame_balanced.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_3_red); }
                 else if (endgame_hanging.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_2_red); }
                 else if (endgame_in_boundary.isChecked()) { endgame_switch_graphic.setImageResource(R.drawable.switch_1_red); }
                 else { endgame_switch_graphic.setImageResource(R.drawable.switch_0_red); }
+            }
+        });
+
+        name_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) { hideKeyboard(v); }
+            }
+        });
+
+        team_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) { hideKeyboard(v); }
+            }
+        });
+
+        round_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) { hideKeyboard(v); }
+            }
+        });
+
+        notes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) { hideKeyboard(v); }
             }
         });
 
@@ -361,7 +390,7 @@ public class InfiniteRecharge extends AppCompatActivity {
 
                 if (isChecked) {
                     teleop_rot_ctrl_2.setVisibility(View.VISIBLE);
-                    spinElement(teleop_wheel,720,1250);
+                    spinElement(teleop_wheel,540,1000);
                 } else {
                     teleop_rot_ctrl_2.setVisibility(View.GONE);
                     teleop_rot_ctrl_2.setChecked(false);
@@ -631,7 +660,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                     reset_fields();
 
                     if (team_input.getText().toString().equals("1706") && spin == 1) {
-                        spinElement(logo,720f,1000);
+                        spinElement(logo,720f,1500);
                     } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
                 }
             }
@@ -716,5 +745,10 @@ public class InfiniteRecharge extends AppCompatActivity {
         rotateAnimation.setDuration(time);
 
         (element).startAnimation(rotateAnimation);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
