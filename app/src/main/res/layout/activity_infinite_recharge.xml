@@ -92,8 +92,6 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="38dp"
             android:layout_height="38dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginLeft="2dp"
             android:layout_marginTop="112dp"
             android:background="@drawable/red_button"
             app:layout_constraintStart_toEndOf="@+id/blue_team_button"
