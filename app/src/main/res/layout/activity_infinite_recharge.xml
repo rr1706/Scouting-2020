@@ -81,7 +81,7 @@
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_marginStart="2dp"
-            android:layout_marginLeft="2dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginTop="112dp"
             android:background="@drawable/blue_button"
             app:layout_constraintStart_toEndOf="@+id/alliance_text"
@@ -99,14 +99,30 @@
             app:layout_constraintStart_toEndOf="@+id/blue_team_button"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/alliance_highlight"
+            android:layout_width="88dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="166dp"
+            android:layout_marginLeft="166dp"
+            android:layout_marginTop="114dp"
+            android:alpha="0"
+            android:background="#000000"
+            app:layout_constraintStart_toEndOf="@+id/line3"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </android.support.constraint.ConstraintLayout>
+
         <TextView
             android:id="@+id/alliance_text"
-            android:layout_width="76dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="174dp"
-            android:layout_marginLeft="174dp"
+            android:layout_width="80dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="170dp"
+            android:layout_marginLeft="170dp"
             android:layout_marginTop="118dp"
-            android:text="Alliance - "
+            android:background="#ffffff"
+            android:gravity="center_horizontal|top"
+            android:text="Alliance -"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/line3"
@@ -500,10 +516,11 @@
 
         <ImageView
             android:id="@+id/teleop_wheel"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/teleop_rot_ctrl_1"
             app:srcCompat="@drawable/wheel_gray" />

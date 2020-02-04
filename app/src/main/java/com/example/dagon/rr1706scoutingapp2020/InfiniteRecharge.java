@@ -147,7 +147,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                             else { data_submitted.setAlpha(255*ds_cooldown/100); }
 
                             //choose alliance reminder
-                            if (alliance != 'n') { alliance_text.setTypeface(null, Typeface.NORMAL); }
+                            if (alliance != 'n') { alliance_highlight.setAlpha(0); }
                             else if (chooseAlliance > 0) { chooseAlliance--; }
                             else if (chooseAlliance == 0) {
                                 chooseAlliance = -75;
