@@ -3,9 +3,12 @@ package com.example.dagon.rr1706scoutingapp2020;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -110,6 +113,9 @@ public class InfiniteRecharge extends AppCompatActivity {
         final CheckBox teleop_rot_ctrl_2 = findViewById(R.id.teleop_rot_ctrl_2);
         final CheckBox auto_no_auto = findViewById(R.id.auto_no_auto);
         final CheckBox auto_pass_init_line = findViewById(R.id.auto_pass_init_line);
+        final CheckBox penalty_y1 = findViewById(R.id.penalty_y1);
+        final CheckBox penalty_y2 = findViewById(R.id.penalty_y2);
+        final CheckBox penalty_r = findViewById(R.id.penalty_r);
 
         //Spinners
         final Spinner logo_spinner = findViewById(R.id.logo_spinner);
@@ -120,11 +126,12 @@ public class InfiniteRecharge extends AppCompatActivity {
         //Other elements
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        //Set invisible/visible elements
+        //Set invisible/visible/tinted elements
         endgame_hanging.setAlpha(1); endgame_hanging.setVisibility(View.GONE);
         endgame_balanced.setAlpha(1); endgame_balanced.setVisibility(View.GONE);
         teleop_rot_ctrl_2.setAlpha(1); teleop_rot_ctrl_2.setVisibility(View.GONE);
         data_submitted.setVisibility(View.VISIBLE);
+        ViewCompat.setBackgroundTintList(penalty_y1, ColorStateList.valueOf(getResources().getColor(R.color.checkYellow)));
 
         //The great while loop (100/sec)
         Runnable myRunnable = new Runnable() {
@@ -484,6 +491,48 @@ public class InfiniteRecharge extends AppCompatActivity {
         });
 
 
+        penalty_y1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    if (penalty_y2.isChecked()) {
+                        penalty_r.setChecked(true);
+                    } else {
+                        penalty_r.setChecked(false);
+                    }
+                }
+            }
+        });
+
+        penalty_y2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    if (penalty_y1.isChecked()) {
+                        penalty_r.setChecked(true);
+                    } else {
+                        penalty_r.setChecked(false);
+                    }
+                }
+            }
+        });
+
+        penalty_r.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    penalty_y1.setChecked(false);
+                    penalty_y2.setChecked(false);
+                    penalty_y1.setEnabled(false);
+                    penalty_y2.setEnabled(false);
+                } else {
+                    penalty_y1.setEnabled(true);
+                    penalty_y2.setEnabled(true);
+                }
+            }
+        });
+
+
         final DialogInterface.OnClickListener NoShowDialog = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -636,6 +685,8 @@ public class InfiniteRecharge extends AppCompatActivity {
                         myOutWriter.println("Endgame: "+genPos);
                         myOutWriter.println("Results: "+((Spinner) findViewById(R.id.endgame_results)).getSelectedItem());
                         myOutWriter.println("Generator Level: "+((Spinner) findViewById(R.id.endgame_generator)).getSelectedItem());
+                        myOutWriter.println("Yellow penalty: " + (penalty_y1.isChecked() || penalty_y2.isChecked()));
+                        myOutWriter.println("Red penalty: " + penalty_r.isChecked());
                         myOutWriter.println("Notes: "+((EditText) findViewById(R.id.notes)).getText());
 
                         myOutWriter.flush();
