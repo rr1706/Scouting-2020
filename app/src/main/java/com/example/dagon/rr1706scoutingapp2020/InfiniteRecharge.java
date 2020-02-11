@@ -782,6 +782,9 @@ public class InfiniteRecharge extends AppCompatActivity {
         ((CheckBox) findViewById(R.id.endgame_in_boundary)).setChecked(false);
         ((CheckBox) findViewById(R.id.endgame_hanging)).setChecked(false);
         ((CheckBox) findViewById(R.id.endgame_balanced)).setChecked(false);
+        ((CheckBox) findViewById(R.id.penalty_y1)).setChecked(false);
+        ((CheckBox) findViewById(R.id.penalty_y2)).setChecked(false);
+        ((CheckBox) findViewById(R.id.penalty_r)).setChecked(false);
     }
 
     private void spinElement(ImageView element, float deg, int time) {
