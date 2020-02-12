@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,9 +38,12 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 
 public class InfiniteRecharge extends AppCompatActivity {
+    Random rand = new Random();
+
     int autoUpperScore = 0;
     int autoLowerScore = 0;
     int teleopUpperScore = 0;
@@ -52,6 +54,7 @@ public class InfiniteRecharge extends AppCompatActivity {
     int team;
     int round;
     int chooseAlliance = 1000;
+    int rotCtrlSpin = 0;
     char alliance = 'n'; //b - Blue alliance, r - Red alliance, n - No alliance selected (grayscale)
 
 
@@ -69,7 +72,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ConstraintLayout GENERAL_BOTTOM = findViewById(R.id.GENERAL_BOTTOM);
         final ConstraintLayout alliance_highlight = findViewById(R.id.alliance_highlight);
 
-/*Nice*///Buttons
+        //Buttons
         final Button blue_team_button = findViewById(R.id.blue_team_button);
         final Button red_team_button = findViewById(R.id.red_team_button);
         final Button no_show = findViewById(R.id.no_show);
@@ -408,9 +411,10 @@ public class InfiniteRecharge extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    spinElement(teleop_wheel, 90, 300);
+                    rotCtrlSpin = rand.nextInt(7)*45 + 45; //Random number 45,90,135, or 180
+                    spinElement(teleop_wheel, rotCtrlSpin, (int) (rotCtrlSpin*1.5));
                 } else {
-                    spinElement(teleop_wheel, -90,300);
+                    spinElement(teleop_wheel, -1*rotCtrlSpin, (int) (rotCtrlSpin*1.5));
                 }
             }
         });
