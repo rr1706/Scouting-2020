@@ -66,7 +66,7 @@ public class InfiniteRecharge extends AppCompatActivity {
 
         //Constraints
         final ConstraintLayout GENERAL_TOP = findViewById(R.id.GENERAL_TOP);
-        final ConstraintLayout AUTO = findViewById(R.id.AUTO);
+/*Nice*/final ConstraintLayout AUTO = findViewById(R.id.AUTO);
         final ConstraintLayout TELEOP = findViewById(R.id.TELEOP);
         final ConstraintLayout ENDGAME = findViewById(R.id.ENDGAME);
         final ConstraintLayout GENERAL_BOTTOM = findViewById(R.id.GENERAL_BOTTOM);
