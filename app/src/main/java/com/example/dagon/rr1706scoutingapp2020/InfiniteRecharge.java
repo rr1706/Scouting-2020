@@ -140,7 +140,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         Runnable myRunnable = new Runnable() {
             @Override
             public void run() {
-                while (0 == 0) {
+                while (true) {
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
@@ -166,9 +166,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                                 } else {
                                     alliance_highlight.setAlpha(1);
                                 }
-                            }
-
-                            else if (chooseAlliance < 0) {
+                            } else {
                                 chooseAlliance++;
                             }
                         }
@@ -411,7 +409,7 @@ public class InfiniteRecharge extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    rotCtrlSpin = rand.nextInt(7)*45 + 45; //Random number 45,90,135, or 180
+                    rotCtrlSpin = rand.nextInt(7)*45 + 45; //Random multiple of 45
                     spinElement(teleop_wheel, rotCtrlSpin, (int) (rotCtrlSpin*1.5));
                 } else {
                     spinElement(teleop_wheel, -1*rotCtrlSpin, (int) (rotCtrlSpin*1.5));
@@ -419,7 +417,7 @@ public class InfiniteRecharge extends AppCompatActivity {
             }
         });
 
-
+/*weed*/
 
         endgame_in_boundary.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -697,10 +695,10 @@ public class InfiniteRecharge extends AppCompatActivity {
                         myOutWriter.close();
                         fOut.close();
 
-                        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Data Submitted!", Toast.LENGTH_SHORT).show();
 
                     } catch (IOException e) {
-                        Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Data Submission Failed! (Tell scouting)", Toast.LENGTH_SHORT).show();
                         Log.e("Exception", "File write failed: " + e.toString());
                     }
 
