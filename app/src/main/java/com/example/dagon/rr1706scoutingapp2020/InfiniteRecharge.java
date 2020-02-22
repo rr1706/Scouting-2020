@@ -177,7 +177,6 @@ public class InfiniteRecharge extends AppCompatActivity {
         Thread myThread = new Thread(myRunnable);
         myThread.start();
 
-
         update_team.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -718,6 +717,9 @@ public class InfiniteRecharge extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {} //Disables back button
 
     private File getDataDirectory() {
         File directory = Environment.getExternalStorageDirectory();
