@@ -603,7 +603,7 @@
             android:id="@+id/endgame_results"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:background="@android:drawable/editbox_background"
@@ -611,18 +611,20 @@
             android:gravity="center|center_horizontal|center_vertical"
             android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line4" />
+            app:layout_constraintTop_toBottomOf="@+id/endgame_generator" />
 
         <Spinner
             android:id="@+id/endgame_generator"
             android:layout_width="150dp"
             android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
             android:background="@android:drawable/editbox_background"
             android:entries="@array/generator"
             android:gravity="center|center_horizontal|center_vertical"
-            app:layout_constraintEnd_toEndOf="@+id/endgame_results"
-            app:layout_constraintTop_toBottomOf="@+id/endgame_results" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line4" />
 
     </android.support.constraint.ConstraintLayout>
 
