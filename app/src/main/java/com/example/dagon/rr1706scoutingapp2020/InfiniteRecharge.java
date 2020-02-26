@@ -11,6 +11,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -64,13 +65,28 @@ public class InfiniteRecharge extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infinite_recharge);
 
+        //Screen stuff
+/*Nice*/DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        /*final int screenX = displayMetrics.widthPixels;
+        final int screenY = displayMetrics.heightPixels;
+        final int baseX = 600;
+        final int baseY = 1024;
+        */
         //Constraints
         final ConstraintLayout GENERAL_TOP = findViewById(R.id.GENERAL_TOP);
-/*Nice*/final ConstraintLayout AUTO = findViewById(R.id.AUTO);
+        final ConstraintLayout AUTO = findViewById(R.id.AUTO);
         final ConstraintLayout TELEOP = findViewById(R.id.TELEOP);
         final ConstraintLayout ENDGAME = findViewById(R.id.ENDGAME);
         final ConstraintLayout GENERAL_BOTTOM = findViewById(R.id.GENERAL_BOTTOM);
         final ConstraintLayout alliance_highlight = findViewById(R.id.alliance_highlight);
+
+        //Lines
+        final ConstraintLayout line1 = findViewById(R.id.line1);
+        final ConstraintLayout line2 = findViewById(R.id.line2);
+        final ConstraintLayout line3 = findViewById(R.id.line3);
+        final ConstraintLayout line4 = findViewById(R.id.line4);
+        //final ConstraintLayout[] constraints = {GENERAL_TOP, AUTO, TELEOP, ENDGAME, GENERAL_BOTTOM, alliance_highlight, line1, line2, line3, line4};
 
         //Buttons
         final Button blue_team_button = findViewById(R.id.blue_team_button);
@@ -78,6 +94,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         final Button no_show = findViewById(R.id.no_show);
         final Button submit = findViewById(R.id.submit);
         final Button update_team = findViewById(R.id.update_team);
+        //final Button[] buttons = {blue_team_button, red_team_button, no_show, submit, update_team};
 
         //ImageViews
         final ImageView auto_power_port = findViewById(R.id.auto_power_port);
@@ -94,6 +111,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ImageView endgame_switch_graphic = findViewById((R.id.endgame_switch_graphic));
         final ImageView data_submitted = findViewById(R.id.data_submitted);
         final ImageView teleop_wheel = findViewById(R.id.teleop_wheel);
+        //final ImageView[] imageViews = {auto_power_port, teleop_power_port, auto_upper_plus, auto_upper_minus, auto_lower_plus, auto_lower_minus, teleop_upper_plus, teleop_upper_minus, teleop_lower_plus, teleop_lower_minus, logo, endgame_switch_graphic, data_submitted, teleop_wheel};
 
         //TextViews
         final TextView auto_upper_text = findViewById(R.id.auto_upper_text);
@@ -101,12 +119,19 @@ public class InfiniteRecharge extends AppCompatActivity {
         final TextView teleop_upper_text = findViewById(R.id.teleop_upper_text);
         final TextView teleop_lower_text = findViewById(R.id.teleop_lower_text);
         final TextView alliance_text = findViewById(R.id.alliance_text);
+        final TextView auto_title = findViewById(R.id.auto_title);
+        final TextView teleop_title = findViewById(R.id.teleop_title);
+        final TextView endgame_title = findViewById(R.id.endgame_title);
+        final TextView teleop_rotation_warning = findViewById(R.id.teleop_rotation_warning);
+        final TextView penalties_warning = findViewById(R.id.penalties_warning);
+        //final TextView[] textViews = {auto_upper_text, auto_lower_text, teleop_upper_text, teleop_lower_text, alliance_text, auto_title, teleop_title, endgame_title, teleop_rotation_warning, penalties_warning};
 
         //EditTexts
         final EditText name_input = findViewById(R.id.name_input);
         final EditText team_input = findViewById(R.id.team_input);
         final EditText round_input = findViewById(R.id.round_input);
         final EditText notes = findViewById(R.id.notes);
+        //final EditText[] editTexts = {name_input, team_input, round_input, notes};
 
         //CheckBoxes
         final CheckBox endgame_in_boundary = findViewById(R.id.endgame_in_boundary);
@@ -119,12 +144,18 @@ public class InfiniteRecharge extends AppCompatActivity {
         final CheckBox penalty_y1 = findViewById(R.id.penalty_y1);
         final CheckBox penalty_y2 = findViewById(R.id.penalty_y2);
         final CheckBox penalty_r = findViewById(R.id.penalty_r);
+        final CheckBox lost_parts = findViewById(R.id.lost_parts);
+        final CheckBox fell_over = findViewById(R.id.fell_over);
+        final CheckBox communication_issues = findViewById(R.id.communication_issues);
+        final CheckBox broke_down = findViewById(R.id.broke_down);
+        //final CheckBox[] checkBoxes = {endgame_in_boundary, endgame_hanging, endgame_balanced, teleop_rot_ctrl_1, teleop_rot_ctrl_2, auto_no_auto, auto_pass_init_line, penalty_y1, penalty_y2, penalty_r, lost_parts, fell_over, communication_issues, broke_down};
 
         //Spinners
         final Spinner logo_spinner = findViewById(R.id.logo_spinner);
         final Spinner speed = findViewById(R.id.speed);
         final Spinner endgame_results = findViewById(R.id.endgame_results);
         final Spinner endgame_generator = findViewById(R.id.endgame_generator);
+        //final Spinner[] spinners = {logo_spinner, speed, endgame_results, endgame_generator};
 
         //Other elements
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -135,6 +166,31 @@ public class InfiniteRecharge extends AppCompatActivity {
         teleop_rot_ctrl_2.setAlpha(1); teleop_rot_ctrl_2.setVisibility(View.GONE);
         data_submitted.setVisibility(View.VISIBLE);
         ViewCompat.setBackgroundTintList(penalty_y1, ColorStateList.valueOf(getResources().getColor(R.color.checkYellow)));
+
+        //Scale everything (poopy)
+        /*
+        for (TextView i : textViews) {
+            i.getLayoutParams().width = i.getLayoutParams().width * screenX/baseX;
+            i.getLayoutParams().height = i.getLayoutParams().height * screenY/baseY;
+        } for (EditText i : editTexts) {
+            i.getLayoutParams().width = i.getLayoutParams().width * screenX/baseX;
+            i.getLayoutParams().height = i.getLayoutParams().height * screenY/baseY;
+        } for (ImageView i : imageViews) {
+            i.getLayoutParams().width = i.getLayoutParams().width * screenX/baseX;
+            i.getLayoutParams().height = i.getLayoutParams().height * screenY/baseY;
+        } for (Spinner i : spinners) {
+            i.getLayoutParams().width = i.getLayoutParams().width * screenX/baseX;
+            i.getLayoutParams().height = i.getLayoutParams().height * screenY/baseY;
+        } for (CheckBox i : checkBoxes) {
+            i.getLayoutParams().width = i.getLayoutParams().width * screenX/baseX;
+            i.getLayoutParams().height = i.getLayoutParams().height * screenY/baseY;
+        } for (Button i : buttons) {
+            i.getLayoutParams().width = i.getLayoutParams().width * screenX/baseX;
+            i.getLayoutParams().height = i.getLayoutParams().height * screenY/baseY;
+        } for (ConstraintLayout i : constraints) {
+            i.setMaxWidth(i.getMaxWidth() * screenX/baseX); i.setMinWidth(i.getMinWidth() * screenX/baseX);
+            i.setMaxHeight(i.getMaxHeight() * screenX/baseX); i.setMinHeight(i.getMinHeight() * screenX/baseX);
+        }*/ // idk this no work
 
         //The great while loop (100/sec)
         Runnable myRunnable = new Runnable() {
@@ -661,34 +717,34 @@ public class InfiniteRecharge extends AppCompatActivity {
                         myOutWriter.println("Alliance: "+alliance);
                         myOutWriter.println("Speed: "+speed.getSelectedItem().toString());
                         //Robot errors handling
-                        if (((CheckBox) findViewById(R.id.lost_parts)).isChecked()) { robotErrors += "lost parts, "; }
-                        if (((CheckBox) findViewById(R.id.fell_over)).isChecked()) { robotErrors += "fell over, "; }
-                        if (((CheckBox) findViewById(R.id.communication_issues)).isChecked()) { robotErrors += "comm issues, "; }
-                        if (((CheckBox) findViewById(R.id.broke_down)).isChecked()) { robotErrors += "broke down, "; }
+                        if (lost_parts.isChecked()) { robotErrors += "lost parts, "; }
+                        if (fell_over.isChecked()) { robotErrors += "fell over, "; }
+                        if (communication_issues.isChecked()) { robotErrors += "comm issues, "; }
+                        if (broke_down.isChecked()) { robotErrors += "broke down, "; }
                         if (robotErrors.equals("")) { robotErrors = "None"; }
                         myOutWriter.println("Robot Errors: "+robotErrors);
                         myOutWriter.println("Auto Top Score: "+autoUpperScore);
                         myOutWriter.println("Auto Bottom Score: "+autoLowerScore);
-                        myOutWriter.println("No Auto: "+((CheckBox) findViewById(R.id.auto_no_auto)).isChecked());
-                        myOutWriter.println("Passed Init Line: "+((CheckBox) findViewById(R.id.auto_pass_init_line)).isChecked());
+                        myOutWriter.println("No Auto: "+auto_no_auto.isChecked());
+                        myOutWriter.println("Passed Init Line: "+auto_pass_init_line.isChecked());
                         myOutWriter.println("Teleop Top Score: "+teleopUpperScore);
                         myOutWriter.println("Teleop Bottom Score: "+teleopLowerScore);
                         //Rotation control handling
-                        if (((CheckBox) findViewById(R.id.teleop_rot_ctrl_2)).isChecked()) { rot_ctrl = 2; }
-                        else if (((CheckBox) findViewById(R.id.teleop_rot_ctrl_1)).isChecked()) { rot_ctrl = 1; }
+                        if (teleop_rot_ctrl_2.isChecked()) { rot_ctrl = 2; }
+                        else if (teleop_rot_ctrl_1.isChecked()) { rot_ctrl = 1; }
                         else { rot_ctrl = 0; }
                         myOutWriter.println("Rotation Control: "+rot_ctrl);
                         //Generator position handling
-                        if (((CheckBox) findViewById(R.id.endgame_balanced)).isChecked()) { genPos = "Balanced"; }
-                        else if (((CheckBox) findViewById(R.id.endgame_hanging)).isChecked()) { genPos = "Hanging"; }
-                        else if (((CheckBox) findViewById(R.id.endgame_in_boundary)).isChecked()) { genPos = "In Boundary"; }
+                        if (endgame_balanced.isChecked()) { genPos = "Balanced"; }
+                        else if (endgame_hanging.isChecked()) { genPos = "Hanging"; }
+                        else if (endgame_in_boundary.isChecked()) { genPos = "In Boundary"; }
                         else { genPos = "No Points"; }
                         myOutWriter.println("Endgame: "+genPos);
-                        myOutWriter.println("Results: "+((Spinner) findViewById(R.id.endgame_results)).getSelectedItem());
-                        myOutWriter.println("Generator Level: "+((Spinner) findViewById(R.id.endgame_generator)).getSelectedItem());
+                        myOutWriter.println("Results: "+endgame_results.getSelectedItem());
+                        myOutWriter.println("Generator Level: "+endgame_generator.getSelectedItem());
                         myOutWriter.println("Yellow penalty: " + (penalty_y1.isChecked() || penalty_y2.isChecked()));
                         myOutWriter.println("Red penalty: " + penalty_r.isChecked());
-                        myOutWriter.println("Notes: "+((EditText) findViewById(R.id.notes)).getText());
+                        myOutWriter.println("Notes: "+notes.getText());
 
                         myOutWriter.flush();
                         myOutWriter.close();
@@ -741,8 +797,7 @@ public class InfiniteRecharge extends AppCompatActivity {
                 text += line + "\n";
             }
             br.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         Log.e("log", text);
