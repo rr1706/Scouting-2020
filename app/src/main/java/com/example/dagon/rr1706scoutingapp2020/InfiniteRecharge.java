@@ -167,7 +167,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         data_submitted.setVisibility(View.VISIBLE);
         ViewCompat.setBackgroundTintList(penalty_y1, ColorStateList.valueOf(getResources().getColor(R.color.checkYellow)));
 
-        //Scale everything (poopy)
+        //Scale everything
         /*
         for (TextView i : textViews) {
             i.getLayoutParams().width = i.getLayoutParams().width * screenX/baseX;
