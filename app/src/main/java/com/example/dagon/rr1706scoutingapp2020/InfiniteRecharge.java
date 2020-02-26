@@ -82,10 +82,10 @@ public class InfiniteRecharge extends AppCompatActivity {
         final ConstraintLayout alliance_highlight = findViewById(R.id.alliance_highlight);
 
         //Lines
-        final ConstraintLayout line1 = findViewById(R.id.line1);
+        /*final ConstraintLayout line1 = findViewById(R.id.line1);
         final ConstraintLayout line2 = findViewById(R.id.line2);
         final ConstraintLayout line3 = findViewById(R.id.line3);
-        final ConstraintLayout line4 = findViewById(R.id.line4);
+        final ConstraintLayout line4 = findViewById(R.id.line4);*/
         //final ConstraintLayout[] constraints = {GENERAL_TOP, AUTO, TELEOP, ENDGAME, GENERAL_BOTTOM, alliance_highlight, line1, line2, line3, line4};
 
         //Buttons
@@ -119,11 +119,11 @@ public class InfiniteRecharge extends AppCompatActivity {
         final TextView teleop_upper_text = findViewById(R.id.teleop_upper_text);
         final TextView teleop_lower_text = findViewById(R.id.teleop_lower_text);
         final TextView alliance_text = findViewById(R.id.alliance_text);
-        final TextView auto_title = findViewById(R.id.auto_title);
+        /*final TextView auto_title = findViewById(R.id.auto_title);
         final TextView teleop_title = findViewById(R.id.teleop_title);
         final TextView endgame_title = findViewById(R.id.endgame_title);
         final TextView teleop_rotation_warning = findViewById(R.id.teleop_rotation_warning);
-        final TextView penalties_warning = findViewById(R.id.penalties_warning);
+        final TextView penalties_warning = findViewById(R.id.penalties_warning);*/
         //final TextView[] textViews = {auto_upper_text, auto_lower_text, teleop_upper_text, teleop_lower_text, alliance_text, auto_title, teleop_title, endgame_title, teleop_rotation_warning, penalties_warning};
 
         //EditTexts
