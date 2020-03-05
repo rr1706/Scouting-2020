@@ -472,7 +472,6 @@ public class InfiniteRecharge extends AppCompatActivity {
             }
         });
 
-/*weed*/
 
         endgame_in_boundary.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -541,6 +540,10 @@ public class InfiniteRecharge extends AppCompatActivity {
                 } else if (logo_spinner.getSelectedItem().toString().equals("Team 4329")) {
                     logo.setImageResource(R.drawable.lutheran_roboteers_logo);
                 }
+
+                if (team_input.getText().toString().equals("1706") && spin == 1) {
+                    spinElement(logo,720f,1500);
+                } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
             }
 
             @Override
