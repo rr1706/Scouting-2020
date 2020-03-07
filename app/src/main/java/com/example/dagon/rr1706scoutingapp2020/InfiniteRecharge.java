@@ -57,6 +57,7 @@ public class InfiniteRecharge extends AppCompatActivity {
     int chooseAlliance = 1000;
     int rotCtrlSpin = 0;
     char alliance = 'n'; //b - Blue alliance, r - Red alliance, n - No alliance selected (grayscale)
+    boolean autoUpdateTeams = false;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -65,8 +66,8 @@ public class InfiniteRecharge extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infinite_recharge);
 
-        //Screen stuff
-/*Nice*/DisplayMetrics displayMetrics = new DisplayMetrics();
+/*Nice*///Screen stuff
+        DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         /*final int screenX = displayMetrics.widthPixels;
         final int screenY = displayMetrics.heightPixels;
@@ -233,9 +234,30 @@ public class InfiniteRecharge extends AppCompatActivity {
         Thread myThread = new Thread(myRunnable);
         myThread.start();
 
+
+        final DialogInterface.OnClickListener UpdateTeamsDialog = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        autoUpdateTeams = true;
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        autoUpdateTeams = false;
+                }
+            }
+        };
         update_team.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!autoUpdateTeams) {
+                    builder.setMessage("Do you want to automatically update teams when data is submitted?")
+                            .setPositiveButton("Yes", UpdateTeamsDialog)
+                            .setNegativeButton("No", UpdateTeamsDialog)
+                            .show();
+                }
+
                 String newTeam;
 
                 if (round_input.getText().toString().equals("")) {
@@ -245,21 +267,24 @@ public class InfiniteRecharge extends AppCompatActivity {
 
                 round = Integer.parseInt(round_input.getText().toString());
 
+
                 try {
                     newTeam = getTeams().substring(
-                            getTeams().indexOf("." + round + ":") + 1 + ("."+round).length(), //Start
+                            getTeams().indexOf("." + round + ":") + 1 + ("." + round).length(), //Start
                             getTeams().substring(getTeams().indexOf("." + round + ":")).indexOf("\n") + getTeams().indexOf("." + round + ":") //End
                     );
-                } catch(Exception e) {
+                } catch (Exception e) {
                     newTeam = "";
-                    Log.e("log",e.toString());
+                    Log.e("log", e.toString());
                 }
 
                 team_input.setText(newTeam);
 
                 if (team_input.getText().toString().equals("1706") && spin == 1) {
-                    spinElement(logo,720f,1500);
-                } else if (!team_input.getText().toString().equals("1706")) { spin = 1; }
+                    spinElement(logo, 720f, 1500);
+                } else if (!team_input.getText().toString().equals("1706")) {
+                    spin = 1;
+                }
             }
         });
 
@@ -813,15 +838,17 @@ public class InfiniteRecharge extends AppCompatActivity {
 
         round++;
 
-        try {
-            newTeam = getTeams().substring(
-                    getTeams().indexOf("." + round + ":") + 1 + ("."+round).length(), //Start
-                    getTeams().substring(getTeams().indexOf("." + round + ":")).indexOf("\n") + getTeams().indexOf("." + round + ":") //End
-            );
-        } catch(Exception e) {
-            newTeam = "";
-            Log.e("log",e.toString());
-        }
+        if (autoUpdateTeams) {
+            try {
+                newTeam = getTeams().substring(
+                        getTeams().indexOf("." + round + ":") + 1 + ("." + round).length(), //Start
+                        getTeams().substring(getTeams().indexOf("." + round + ":")).indexOf("\n") + getTeams().indexOf("." + round + ":") //End
+                );
+            } catch (Exception e) {
+                newTeam = "";
+                Log.e("log", e.toString());
+            }
+        } else { newTeam = ""; }
 
         ((EditText) findViewById(R.id.team_input)).setText(newTeam);
         ((EditText) findViewById(R.id.round_input)).setText(""+round);
