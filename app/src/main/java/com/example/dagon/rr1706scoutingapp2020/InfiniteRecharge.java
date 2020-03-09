@@ -252,7 +252,7 @@ public class InfiniteRecharge extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!autoUpdateTeams) {
-                    builder.setMessage("Do you want to automatically update teams when data is submitted?")
+                    builder.setMessage("Do you want to automatically update teams when data is submitted?\n(Should be enabled for Qualifiers, and disabled for Practice Matches)")
                             .setPositiveButton("Yes", UpdateTeamsDialog)
                             .setNegativeButton("No", UpdateTeamsDialog)
                             .show();
