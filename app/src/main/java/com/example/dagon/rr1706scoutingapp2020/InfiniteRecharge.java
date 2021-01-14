@@ -120,6 +120,9 @@ public class InfiniteRecharge extends AppCompatActivity {
         final TextView teleop_upper_text = findViewById(R.id.teleop_upper_text);
         final TextView teleop_lower_text = findViewById(R.id.teleop_lower_text);
         final TextView alliance_text = findViewById(R.id.alliance_text);
+        final TextView speed_text = findViewById(R.id.speed_text);
+        final TextView endgame_generator_text = findViewById(R.id.endgame_generator_text);
+        final TextView endgame_results_text = findViewById(R.id.endgame_results_text);
         /*final TextView auto_title = findViewById(R.id.auto_title);
         final TextView teleop_title = findViewById(R.id.teleop_title);
         final TextView endgame_title = findViewById(R.id.endgame_title);
@@ -165,6 +168,9 @@ public class InfiniteRecharge extends AppCompatActivity {
         endgame_hanging.setAlpha(1); endgame_hanging.setVisibility(View.GONE);
         endgame_balanced.setAlpha(1); endgame_balanced.setVisibility(View.GONE);
         teleop_rot_ctrl_2.setAlpha(1); teleop_rot_ctrl_2.setVisibility(View.GONE);
+        speed_text.setVisibility(View.INVISIBLE);
+        endgame_generator_text.setVisibility(View.INVISIBLE);
+        endgame_results_text.setVisibility(View.INVISIBLE);
         data_submitted.setVisibility(View.VISIBLE);
         ViewCompat.setBackgroundTintList(penalty_y1, ColorStateList.valueOf(getResources().getColor(R.color.checkYellow)));
 
@@ -573,6 +579,51 @@ public class InfiniteRecharge extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+
+        speed.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (speed.getSelectedItem().toString().equals("Speed")) {
+                    speed_text.setVisibility(View.INVISIBLE);
+                } else {
+                    speed_text.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
+
+        endgame_generator.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (endgame_generator.getSelectedItem().toString().equals("Generator Level")) {
+                    endgame_generator_text.setVisibility(View.INVISIBLE);
+                } else {
+                    endgame_generator_text.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
+
+        endgame_results.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (endgame_results.getSelectedItem().toString().equals("Results")) {
+                    endgame_results_text.setVisibility(View.INVISIBLE);
+                } else {
+                    endgame_results_text.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
 

@@ -603,26 +603,46 @@
             android:id="@+id/endgame_results"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginTop="8dp"
             android:background="@android:drawable/editbox_background"
             android:entries="@array/results"
             android:gravity="center|center_horizontal|center_vertical"
             android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="@+id/endgame_generator"
-            app:layout_constraintTop_toBottomOf="@+id/endgame_generator" />
+            app:layout_constraintTop_toBottomOf="@+id/endgame_results_text" />
 
         <Spinner
             android:id="@+id/endgame_generator"
             android:layout_width="150dp"
             android:layout_height="40dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
             android:background="@android:drawable/editbox_background"
             android:entries="@array/generator"
             android:gravity="center|center_horizontal|center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/endgame_generator_text" />
+
+        <TextView
+            android:id="@+id/endgame_generator_text"
+            android:layout_width="110dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="16dp"
+            android:text="Generator Level:"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="@+id/endgame_generator"
             app:layout_constraintTop_toBottomOf="@+id/line4" />
+
+        <TextView
+            android:id="@+id/endgame_results_text"
+            android:layout_width="90dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:text="Results:"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="@+id/endgame_results"
+            app:layout_constraintTop_toBottomOf="@+id/endgame_generator" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -745,6 +765,17 @@
             android:entries="@array/speed"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/submit" />
+
+        <TextView
+            android:id="@+id/speed_text"
+            android:layout_width="110dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="Speed:"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toTopOf="@+id/speed"
+            app:layout_constraintStart_toStartOf="@+id/speed" />
 
     </android.support.constraint.ConstraintLayout>
 
