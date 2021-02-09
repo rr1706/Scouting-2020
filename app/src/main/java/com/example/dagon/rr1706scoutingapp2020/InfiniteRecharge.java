@@ -66,7 +66,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infinite_recharge);
 
-/*Nice*///Screen stuff
+        //Screen stuff
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         /*final int screenX = displayMetrics.widthPixels;
@@ -94,7 +94,6 @@ public class InfiniteRecharge extends AppCompatActivity {
         final Button red_team_button = findViewById(R.id.red_team_button);
         final Button no_show = findViewById(R.id.no_show);
         final Button submit = findViewById(R.id.submit);
-        final Button update_team = findViewById(R.id.update_team);
         //final Button[] buttons = {blue_team_button, red_team_button, no_show, submit, update_team};
 
         //ImageViews
@@ -152,6 +151,7 @@ public class InfiniteRecharge extends AppCompatActivity {
         final CheckBox fell_over = findViewById(R.id.fell_over);
         final CheckBox communication_issues = findViewById(R.id.communication_issues);
         final CheckBox broke_down = findViewById(R.id.broke_down);
+        final CheckBox update_teams = findViewById(R.id.update_teams_check);
         //final CheckBox[] checkBoxes = {endgame_in_boundary, endgame_hanging, endgame_balanced, teleop_rot_ctrl_1, teleop_rot_ctrl_2, auto_no_auto, auto_pass_init_line, penalty_y1, penalty_y2, penalty_r, lost_parts, fell_over, communication_issues, broke_down};
 
         //Spinners
@@ -239,60 +239,6 @@ public class InfiniteRecharge extends AppCompatActivity {
         };
         Thread myThread = new Thread(myRunnable);
         myThread.start();
-
-
-        final DialogInterface.OnClickListener UpdateTeamsDialog = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        autoUpdateTeams = true;
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        autoUpdateTeams = false;
-                }
-            }
-        };
-        update_team.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!autoUpdateTeams) {
-                    builder.setMessage("Do you want to automatically update teams when data is submitted?\n(Should be enabled for Qualifiers, and disabled for Practice Matches)")
-                            .setPositiveButton("Yes", UpdateTeamsDialog)
-                            .setNegativeButton("No", UpdateTeamsDialog)
-                            .show();
-                }
-
-                String newTeam;
-
-                if (round_input.getText().toString().equals("")) {
-                    team_input.setText("");
-                    return;
-                }
-
-                round = Integer.parseInt(round_input.getText().toString());
-
-
-                try {
-                    newTeam = getTeams().substring(
-                            getTeams().indexOf("." + round + ":") + 1 + ("." + round).length(), //Start
-                            getTeams().substring(getTeams().indexOf("." + round + ":")).indexOf("\n") + getTeams().indexOf("." + round + ":") //End
-                    );
-                } catch (Exception e) {
-                    newTeam = "";
-                    Log.e("log", e.toString());
-                }
-
-                team_input.setText(newTeam);
-
-                if (team_input.getText().toString().equals("1706") && spin == 1) {
-                    spinElement(logo, 720f, 1500);
-                } else if (!team_input.getText().toString().equals("1706")) {
-                    spin = 1;
-                }
-            }
-        });
 
         blue_team_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -556,6 +502,46 @@ public class InfiniteRecharge extends AppCompatActivity {
                     if (alliance == 'b') { endgame_switch_graphic.setImageResource(R.drawable.switch_2_blue); }
                     else if (alliance == 'r') { endgame_switch_graphic.setImageResource(R.drawable.switch_2_red); }
                     else { endgame_switch_graphic.setImageResource(R.drawable.switch_2_gray); }
+                }
+            }
+        });
+
+
+        update_teams.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    autoUpdateTeams = true;
+                    String newTeam;
+
+                    if (round_input.getText().toString().equals("")) {
+                        team_input.setText("");
+                        return;
+                    }
+
+                    round = Integer.parseInt(round_input.getText().toString());
+
+
+                    try {
+                        newTeam = getTeams().substring(
+                                getTeams().indexOf("." + round + ":") + 1 + ("." + round).length(), //Start
+                                getTeams().substring(getTeams().indexOf("." + round + ":")).indexOf("\n") + getTeams().indexOf("." + round + ":") //End
+                        );
+                    } catch (Exception e) {
+                        newTeam = "";
+                        Log.e("log", e.toString());
+                    }
+
+                    team_input.setText(newTeam);
+
+                    if (team_input.getText().toString().equals("1706") && spin == 1) {
+                        spinElement(logo, 720f, 1500);
+                    } else if (!team_input.getText().toString().equals("1706")) {
+                        spin = 1;
+                    }
+                } else {
+                    autoUpdateTeams = false;
+                    team_input.setText("");
                 }
             }
         });
